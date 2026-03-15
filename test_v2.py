@@ -6,7 +6,7 @@ betweenness, Fiedler, activation spreading, Hebbian learning,
 temporal decay, entropy, surprise, health score.
 """
 import sys, time, math
-sys.path.insert(0, '/home/claude')
+sys.path.insert(0, '.')
 from thought_graph import (
     ThoughtGraph, ThoughtNode, ThoughtEdge,
     GraphAnalyzer, ActivationEngine, TemporalEngine,
