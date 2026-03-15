@@ -1,40 +1,40 @@
-# ThoughtGraph: Gap Analysis & Roadmap
+# ThoughtGraph: Comprehensive Deep Audit & Roadmap (v2.1)
 
-This document outlines the genuine gaps identified during the v2.1 audit and prioritizes the next development phase.
+This document provides a refined map of system weaknesses and prioritizes high-impact improvements for the next development phase.
 
-## Genuine Gaps Identified
+## 1. Critical Bugs & Technical Debt
+- **Fake Thread Safety:** The code uses `contextlib.ExitStack()` as a "lock", which provides no actual mutual exclusion. This is a critical risk for the FastAPI server.
+- **Bare Exception Handlers:** Multiple `except:` blocks in `thought_graph.py` swallow all errors, making debugging difficult and potentially leaving the system in an inconsistent state.
+- **Blocking API Calls:** Heavy NetworkX computations (Betweenness Centrality, etc.) are executed synchronously in FastAPI route handlers, blocking the event loop and potentially causing DoS under load.
+- **Missing Entry Points:** Training functionality is only available via a separate CLI script, not integrated into the API.
 
-### 1. Functional Gaps
-- **Persistence Layer:** Currently uses a single monolithic JSON file (`thought_graph_data.json`). This will not scale for large graphs (>10k nodes) and is prone to corruption on concurrent writes.
-- **Concurrent Access:** The `ThoughtGraph` class lacks robust thread-safety (locks) for multi-user or high-concurrency API environments.
-- **Advanced Querying:** No support for complex graph queries (e.g., "find all nodes in community X with PageRank > Y connected to node Z").
-- **Directed Relationships:** While metadata exists, most algorithms treat edges as undirected.
+## 2. Structural Weaknesses
+- **Monolithic Storage:** Reliance on `thought_graph_data.json` lacks transactional integrity and scalability.
+- **Tight Coupling:** The `ThoughtGraph` class directly handles I/O, analytics, and data management, violating SRP (Single Responsibility Principle).
+- **Synchronous Persistence:** Every node/edge addition triggers a full JSON dump (`_save()`), which is extremely slow for larger graphs.
 
-### 2. Algorithmic Gaps
-- **Incremental Updates:** Topological metrics (PageRank, Communities) are recomputed from scratch on every change. This is inefficient for large graphs.
-- **Embedding Fidelity:** N-gram hashing is fast and zero-dependency but lacks the deep semantic nuance of LLM-based embeddings (e.g., Ada-002 or BERT).
-- **Adaptive Learning:** Hebbian update parameters (`lr`, `depression`) are hardcoded and do not adapt to graph density.
-
-### 3. Documentation & DX Gaps
-- **Client SDK:** No official Python or JS client library; users must interface with raw REST.
-- **Visualizer Interactivity:** The 3D UI is a "read-only" visualization; it lacks interactive editing (add/remove/connect nodes directly in 3D).
+## 3. Algorithmic & Strategic Opportunities
+- **Embedding Performance:** Character n-gram hashing is efficient but lacks the semantic depth of transformer-based embeddings.
+- **Incremental Topology:** Metrics like PageRank are recomputed from scratch instead of using incremental algorithms.
+- **Visualization Interaction:** The UI is primarily a viewer; it lacks the ability to manipulate the graph state directly.
 
 ---
 
-## Prioritized Next Development Phase (v3.0)
+## Prioritized Roadmap (High-Impact Improvements)
 
-### Phase 1: Infrastructure (High Priority)
-1.  **Database Migration:** Move from JSON to a proper graph-capable storage (e.g., SQLite with a graph schema or PostgreSQL + Age).
-2.  **Concurrency Control:** Implement read/write locks for core graph data structures.
+### Phase 1: Stability & Safety (Immediate)
+1.  **True Concurrency:** Replace `ExitStack` with `threading.Lock` or `threading.RLock`.
+2.  **Robust Error Handling:** Replace bare `except:` with specific exceptions and logging.
+3.  **API Integration:** Add `/train` endpoint to expose training cycles to the UI/External callers.
 
-### Phase 2: Performance (Medium Priority)
-1.  **Incremental Analytics:** Implement incremental PageRank updates and dynamic community detection.
-2.  **Batch Processing:** Optimize the API for bulk operations.
+### Phase 2: Architecture (Short Term)
+1.  **Async Analytics:** Move heavy graph computations to a background thread pool to keep the API responsive.
+2.  **Optimized Persistence:** Implement a "dirty flag" or debounced saving to reduce I/O overhead.
+3.  **Database Migration:** Begin transition to SQLite or a dedicated Graph DB.
 
-### Phase 3: Intelligence (Medium Priority)
-1.  **Pluggable Embeddings:** Allow users to swap N-gram hashing for OpenAI/HuggingFace embeddings via configuration.
-2.  **Relationship Classification:** Automate the classification of edge types based on semantic overlap.
+### Phase 3: Intelligence (Medium Term)
+1.  **Pluggable ML:** Interface for external embedding services.
+2.  **Adaptive Learning:** Dynamically adjust Hebbian learning rates based on graph health metrics.
 
-### Phase 4: UX (Low Priority)
-1.  **Interactive UI:** Enable node manipulation directly within the 3D Three.js environment.
-2.  **API Client:** Release a lightweight Python wrapper for the FastAPI endpoints.
+### Phase 4: UX (Long Term)
+1.  **Interactive 3D UI:** Drag-and-drop node creation and connection in the Three.js environment.

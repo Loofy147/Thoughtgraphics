@@ -450,6 +450,13 @@ def graph_diff(snap_a: int, snap_b: int):
     return graph.graph_diff(history[snap_a], history[snap_b])
 
 
+@app.post("/train")
+def train_graph(cycles: int = 5, node_label: str = "Core Decision Pattern"):
+    """Run Hebbian training cycles on the graph."""
+    from train_helper import run_training_cycle
+    result = run_training_cycle(graph, node_label=node_label, cycles=cycles)
+    return result
+
 @app.post("/reset")
 def reset_graph():
     graph.reset()

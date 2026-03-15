@@ -34,6 +34,12 @@ python api.py
 The API will be available at `http://localhost:8000`.
 The UI can be accessed at `http://localhost:8000/ui`.
 
+### API Training
+You can also trigger training cycles directly via the API:
+```bash
+curl -X POST "http://localhost:8000/train?cycles=10"
+```
+
 ### Running the Training Script
 To demonstrate Hebbian learning and edge strengthening:
 ```bash
@@ -71,3 +77,7 @@ For a full list of endpoints and method signatures, see `api_docs_reference.txt`
 - **Evaluation:** 5-factor scoring (Semantic, Community, PageRank Influence, Bridging, Novelty).
 - **Learning:** `lr=0.04`, `depression=0.005` for Hebbian updates.
 - **Decay:** `rate=0.015` (exponential decay per hour).
+
+
+## Audit Findings
+For a detailed analysis of system weaknesses and the v3.0 roadmap, see [GAPS.md](GAPS.md).

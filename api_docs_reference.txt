@@ -18,6 +18,7 @@ Module: thought_graph
     The function applies recursively to field values that are
     dataclass instances. This will also look into built-in containers:
     tuples, lists, and dicts. Other objects are copied with 'copy.deepcopy()'.
+  Function: atomic(method)
   Function: cosine_sim(a, b)
   Function: dataclass(cls=None, /, *, init=True, repr=True, eq=True, order=False, unsafe_hash=False, frozen=False, match_args=True, kw_only=False, slots=False, weakref_slot=False)
     Doc: Add dunder methods based on the fields defined in the class.
@@ -32,7 +33,7 @@ Module: thought_graph
     __match_args__ tuple is added. If kw_only is true, then by default
     all fields are keyword-only. If slots is true, a new class with a
     __slots__ attribute is returned.
-  Function: field(*, default=<dataclasses._MISSING_TYPE object at 0x7fa4507be510>, default_factory=<dataclasses._MISSING_TYPE object at 0x7fa4507be510>, init=True, repr=True, hash=None, compare=True, metadata=None, kw_only=<dataclasses._MISSING_TYPE object at 0x7fa4507be510>)
+  Function: field(*, default=<dataclasses._MISSING_TYPE object at 0x7ff2111ed610>, default_factory=<dataclasses._MISSING_TYPE object at 0x7ff2111ed610>, init=True, repr=True, hash=None, compare=True, metadata=None, kw_only=<dataclasses._MISSING_TYPE object at 0x7ff2111ed610>)
     Doc: Return an object to identify dataclass fields.
 
     default is the default value of the field.  default_factory is a
@@ -191,8 +192,8 @@ Module: thought_graph
     Method: recency_weight(self, node)
   Class: ThoughtGraph
     Method: __init__(self, persist=True)
-    Method: activate_node(self, node_id, spread=True)
-    Method: add_node(self, label, x=None, y=None, z=None, node_type='active', depth=1, parent_id=None, tags=None, importance=1.0)
+    Method: activate_node(self, *args, **kwargs)
+    Method: add_node(self, *args, **kwargs)
     Method: auto_heal_graph(self, max_links: int = 8, min_score: float = 0.5) -> dict
       Doc: Automatically apply top Adamic-Adar predicted links to reduce bridge count
         and improve small-world coefficient.
@@ -206,8 +207,8 @@ Module: thought_graph
     Method: compute_surprise(self, node)
     Method: concept_path(self, from_id: int, to_id: int) -> dict
       Doc: Shortest weighted path between two nodes (Dijkstra on 1-strength costs).
-    Method: connect(self, from_id, to_id, strength=0.5, edge_type='connection')
-    Method: decay_graph(self)
+    Method: connect(self, *args, **kwargs)
+    Method: decay_graph(self, *args, **kwargs)
     Method: detect_patterns(self)
     Method: evaluate_new_node(self, node)
     Method: export_dot(self) -> str
@@ -226,7 +227,7 @@ Module: thought_graph
     Method: get_edges(self)
     Method: get_evolution_history(self)
     Method: get_node(self, node_id)
-    Method: get_topology(self, force=False)
+    Method: get_topology(self, *args, **kwargs)
     Method: graph_analytics(self)
     Method: graph_diff(self, snapshot_a: dict, snapshot_b: dict) -> dict
       Doc: Compare two evolution snapshots (from get_evolution_history()).
@@ -237,9 +238,8 @@ Module: thought_graph
       Doc: Calibrated health score 0-100 using density-aware normalization.
         Fiedler scored against theoretical maximum for current density.
         Small-world uses log scale (sigma=1.5 = full score for knowledge graphs).
-    Method: merge_nodes(self, keep_id: int, remove_id: int) -> bool
-      Doc: Merge two nodes: transfer connections from remove_id to keep_id.
-    Method: promote_potential(self, node_id)
+    Method: merge_nodes(self, *args, **kwargs)
+    Method: promote_potential(self, *args, **kwargs)
     Method: recommend_exploration(self, k=5)
       Doc: Rank potential nodes by frontier breakthrough score.
         Score = evaluation_score * 0.5 + neighbor_pagerank_influence * 0.3 + recency * 0.2
@@ -247,15 +247,15 @@ Module: thought_graph
     Method: record_snapshot(self)
       Doc: Save current health metrics as a timestamped snapshot.
         Builds a time-series of graph evolution.
-    Method: remove_node(self, node_id)
-    Method: reset(self)
+    Method: remove_node(self, *args, **kwargs)
+    Method: reset(self, *args, **kwargs)
     Method: save_snapshot(self, name: str) -> dict
       Doc: Save a named checkpoint of the current graph state.
     Method: search_nodes(self, query: str = '', node_type: str = None, min_importance: float = 0.0, community_id: int = None, min_pagerank: float = 0.0, tags: list = None, limit: int = 20) -> list
       Doc: Search and filter nodes by multiple criteria.
         Results are sorted by PageRank (most influential first).
         query: substring match on label or tags (case-insensitive).
-    Method: seed_default_graph(self)
+    Method: seed_default_graph(self, *args, **kwargs)
     Method: suggest_connections(self, k=5)
       Doc: Missing-link prediction via Adamic-Adar index.
         Returns list of {from_id, to_id, score, from_label, to_label}.
@@ -319,4 +319,6 @@ FastAPI App: ThoughtGraph API
   Endpoint/Helper: similar_nodes(node_id: int, k: int = 5)
   Endpoint/Helper: suggest_links(k: int = 5)
   Endpoint/Helper: take_snapshot()
+  Endpoint/Helper: train_graph(cycles: int = 5, node_label: str = 'Core Decision Pattern')
+    Doc: Run Hebbian training cycles on the graph.
   Endpoint/Helper: update_node(node_id: int, req: api.UpdateNodeRequest)
