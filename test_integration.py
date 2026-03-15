@@ -564,7 +564,7 @@ if __name__ == "__main__":
     if not wait_for_server(timeout=3):
         print("  Starting server automatically...")
         server_proc = subprocess.Popen(
-            [sys.executable, "/home/claude/api.py"],
+            [sys.executable, "api.py"],
             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
         )
         if not wait_for_server(timeout=15):

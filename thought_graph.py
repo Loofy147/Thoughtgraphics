@@ -1,3 +1,5 @@
+import contextlib
+import numpy as np
 """
 ThoughtGraph v2.1 — March 2026
 Changes from v2.0:
@@ -44,23 +46,38 @@ def make_embedding(label, dims=512):
     return [v / norm for v in vec]
 
 def _compute_baseline_similarity(nodes: list) -> tuple:
-    """Compute (median, max) of pairwise similarities among active nodes."""
+    """Compute (median, max) of pairwise similarities among active nodes using numpy."""
     active = [n for n in nodes if n.node_type in ("active", "meta")]
     if len(active) < 4:
         return 0.5, 1.0
-    sims = []
-    for i, a in enumerate(active):
-        for b in active[i+1:]:
-            sims.append((cosine_sim(a.embedding, b.embedding) + 1) / 2)
-    if not sims:
+
+    embeddings = np.array([n.embedding for n in active])
+    # Compute all-to-all cosine similarity
+    # Norms: (N,)
+    norms = np.linalg.norm(embeddings, axis=1)
+    norms[norms == 0] = 1.0
+    # Normalized: (N, D)
+    normed = embeddings / norms[:, np.newaxis]
+    # Similarity matrix: (N, N)
+    sim_matrix = np.dot(normed, normed.T)
+    # Get upper triangle indices (excluding diagonal)
+    triu_indices = np.triu_indices(len(active), k=1)
+    raw_sims = sim_matrix[triu_indices]
+
+    sims = (raw_sims + 1) / 2
+    if len(sims) == 0:
         return 0.5, 1.0
-    sims.sort()
-    return sims[len(sims)//2], sims[-1]
+
+    return float(np.median(sims)), float(np.max(sims))
 
 
 def cosine_sim(a, b):
-    if len(a) != len(b): return 0.0
-    return max(-1.0, min(1.0, sum(x*y for x,y in zip(a,b))))
+    a = np.asarray(a); b = np.asarray(b)
+    if a.shape != b.shape: return 0.0
+    norm_a = np.linalg.norm(a)
+    norm_b = np.linalg.norm(b)
+    if norm_a == 0 or norm_b == 0: return 0.0
+    return float(np.clip(np.dot(a, b) / (norm_a * norm_b), -1.0, 1.0))
 
 
 # ═══════════════════════════════════════════════════════════
@@ -343,7 +360,7 @@ class TemporalEngine:
 # ═══════════════════════════════════════════════════════════
 
 class ThoughtGraph:
-    STORAGE_PATH = Path("/home/claude/thought_graph_data.json")
+    STORAGE_PATH = Path("thought_graph_data.json")
 
     def __init__(self, persist=True):
         self._nodes: dict = {}
@@ -356,8 +373,24 @@ class ThoughtGraph:
         self._temporal_engine   = TemporalEngine()
         self._cached_topo = {}
         self._topo_dirty  = True
+        self._batch_mode = False
+        self._cached_baseline = None
+        self._lock = contextlib.ExitStack() # For future thread-safety considerations
         if persist and self.STORAGE_PATH.exists():
             self._load()
+
+    @contextlib.contextmanager
+    def batch_operation(self):
+        """Context manager for bulk updates to suppress redundant saves and caching."""
+        old_mode = self._batch_mode
+        self._batch_mode = True
+        try:
+            yield
+        finally:
+            self._batch_mode = old_mode
+            self._cached_baseline = None
+            if not self._batch_mode and self._persist:
+                self._save()
 
     # ── CRUD ──────────────────────────────────
 
@@ -591,7 +624,7 @@ class ThoughtGraph:
                 reasoning="Bootstrap — auto-accepting.", suggested_connections=[],
                 factor_breakdown={})
 
-        topo      = self.get_topology()
+        topo      = self.get_topology() if not self._batch_mode else (self._cached_topo or self.get_topology())
         pageranks = topo.get("pagerank", {})
         coms      = topo.get("communities", {})
         nearest   = self.find_nearest(node, k=7)
@@ -605,7 +638,11 @@ class ThoughtGraph:
         # F1: PageRank-weighted RELATIVE semantic similarity
         # Anchored against the graph's own similarity distribution —
         # domain-alien nodes score near 0, closely related nodes score near 1.
-        baseline_med, baseline_max = _compute_baseline_similarity(list(self._nodes.values()))
+        if self._batch_mode and self._cached_baseline:
+            baseline_med, baseline_max = self._cached_baseline
+        else:
+            baseline_med, baseline_max = _compute_baseline_similarity(list(self._nodes.values()))
+            if self._batch_mode: self._cached_baseline = (baseline_med, baseline_max)
         num = den = 0.0
         for other, _, semantic, combined in nearest:
             pr = pageranks.get(other.id, 1.0/len(self._nodes)) + 0.001
@@ -1129,30 +1166,32 @@ class ThoughtGraph:
         health_before = self.graph_health_score()
         sw_before     = self.graph_analytics().get("small_world_index", 0)
 
-        suggestions = self.suggest_connections(k=max_links + 5)
         applied = []
-        for s in suggestions:
-            if len(applied) >= max_links:
-                break
-            if s["score"] < min_score:
-                continue
-            # Strength proportional to Adamic-Adar score (capped at 0.7)
-            strength = min(0.70, round(s["score"] / 5.0, 2))
-            edge = self.connect(s["from_id"], s["to_id"], strength=strength, edge_type="connection")
-            if edge and edge.activation_count == 0:  # genuinely new edge
-                applied.append({
-                    "from_id":    s["from_id"],
-                    "to_id":      s["to_id"],
-                    "from_label": s["from_label"],
-                    "to_label":   s["to_label"],
-                    "strength":   strength,
-                    "aa_score":   s["score"],
-                })
+        with self.batch_operation():
+            suggestions = self.suggest_connections(k=max_links + 5)
+            for s in suggestions:
+                if len(applied) >= max_links:
+                    break
+                if s["score"] < min_score:
+                    continue
+                # Strength proportional to Adamic-Adar score (capped at 0.7)
+                strength = min(0.70, round(s["score"] / 5.0, 2))
+                edge = self.connect(s["from_id"], s["to_id"], strength=strength, edge_type="connection")
+                if edge and edge.activation_count == 0:  # genuinely new edge
+                    applied.append({
+                        "from_id":    s["from_id"],
+                        "to_id":      s["to_id"],
+                        "from_label": s["from_label"],
+                        "to_label":   s["to_label"],
+                        "strength":   strength,
+                        "aa_score":   s["score"],
+                    })
 
-        self._topo_dirty = True
+            self._topo_dirty = True
+            self.record_snapshot()
+
         health_after = self.graph_health_score()
         a_after      = self.graph_analytics()
-        self.record_snapshot()
 
         return {
             "applied":        applied,
@@ -1176,35 +1215,34 @@ class ThoughtGraph:
         """
         added = []; accepted = []; potential = []; rejected = []
 
-        for item in items:
-            if not isinstance(item, dict) or "label" not in item:
-                continue
-            node = self.add_node(
-                label      = item["label"],
-                node_type  = item.get("node_type", "potential"),
-                importance = item.get("importance", 1.0),
-                tags       = item.get("tags", []),
-                x=item.get("x"), y=item.get("y"), z=item.get("z"),
-            )
-            if auto_evaluate:
-                result = self.evaluate_new_node(node)
-                if result.decision == "ACCEPT":
-                    node.node_type = "active"
-                    accepted.append(node.id)
-                    for tid in result.suggested_connections[:2]:
-                        self.connect(node.id, tid, strength=0.55)
-                elif result.decision == "POTENTIAL":
-                    potential.append(node.id)
-                    for tid in result.suggested_connections[:1]:
-                        self.connect(node.id, tid, strength=0.20, edge_type="potential_link")
-                else:
-                    rejected.append(node.id)
-            added.append(node.id)
+        with self.batch_operation():
+            for item in items:
+                if not isinstance(item, dict) or "label" not in item:
+                    continue
+                node = self.add_node(
+                    label      = item["label"],
+                    node_type  = item.get("node_type", "potential"),
+                    importance = item.get("importance", 1.0),
+                    tags       = item.get("tags", []),
+                    x=item.get("x"), y=item.get("y"), z=item.get("z"),
+                )
+                if auto_evaluate:
+                    result = self.evaluate_new_node(node)
+                    if result.decision == "ACCEPT":
+                        node.node_type = "active"
+                        accepted.append(node.id)
+                        for tid in result.suggested_connections[:2]:
+                            self.connect(node.id, tid, strength=0.55)
+                    elif result.decision == "POTENTIAL":
+                        potential.append(node.id)
+                        for tid in result.suggested_connections[:1]:
+                            self.connect(node.id, tid, strength=0.20, edge_type="potential_link")
+                    else:
+                        rejected.append(node.id)
+                added.append(node.id)
 
-        if self._persist:
-            self._save()
-        self._topo_dirty = True
-        self.record_snapshot()
+            self._topo_dirty = True
+            self.record_snapshot()
 
         return {
             "added":     len(added),
@@ -1252,6 +1290,7 @@ class ThoughtGraph:
                 "version":"2.1"}
 
     def _save(self):
+        if self._batch_mode: return
         with open(self.STORAGE_PATH,"w") as f: json.dump(self.to_dict(),f,indent=2)
 
     def _load(self):
