@@ -343,7 +343,7 @@ class TemporalEngine:
 # ═══════════════════════════════════════════════════════════
 
 class ThoughtGraph:
-    STORAGE_PATH = Path("/home/claude/thought_graph_data.json")
+    STORAGE_PATH = Path("thought_graph_data.json")
 
     def __init__(self, persist=True):
         self._nodes: dict = {}
@@ -356,6 +356,7 @@ class ThoughtGraph:
         self._temporal_engine   = TemporalEngine()
         self._cached_topo = {}
         self._topo_dirty  = True
+        self._batch_mode = False
         if persist and self.STORAGE_PATH.exists():
             self._load()
 
@@ -1174,6 +1175,7 @@ class ThoughtGraph:
         items: list of dicts with keys: label, node_type (opt), importance (opt), tags (opt)
         Returns {added, accepted, potential, rejected, nodes}.
         """
+        self._batch_mode = True
         added = []; accepted = []; potential = []; rejected = []
 
         for item in items:
@@ -1201,6 +1203,7 @@ class ThoughtGraph:
                     rejected.append(node.id)
             added.append(node.id)
 
+        self._batch_mode = False
         if self._persist:
             self._save()
         self._topo_dirty = True
@@ -1252,6 +1255,7 @@ class ThoughtGraph:
                 "version":"2.1"}
 
     def _save(self):
+        if self._batch_mode: return
         with open(self.STORAGE_PATH,"w") as f: json.dump(self.to_dict(),f,indent=2)
 
     def _load(self):
