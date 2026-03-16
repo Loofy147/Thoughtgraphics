@@ -1,0 +1,324 @@
+--- THOUGHT_GRAPH.PY DOCS ---
+Module: thought_graph
+  Function: asdict(obj, *, dict_factory=<class 'dict'>)
+    Doc: Return the fields of a dataclass instance as a new dictionary mapping
+    field names to field values.
+
+    Example usage::
+
+      @dataclass
+      class C:
+          x: int
+          y: int
+
+      c = C(1, 2)
+      assert asdict(c) == {'x': 1, 'y': 2}
+
+    If given, 'dict_factory' will be used instead of built-in dict.
+    The function applies recursively to field values that are
+    dataclass instances. This will also look into built-in containers:
+    tuples, lists, and dicts. Other objects are copied with 'copy.deepcopy()'.
+  Function: atomic(method)
+  Function: cosine_sim(a, b)
+  Function: dataclass(cls=None, /, *, init=True, repr=True, eq=True, order=False, unsafe_hash=False, frozen=False, match_args=True, kw_only=False, slots=False, weakref_slot=False)
+    Doc: Add dunder methods based on the fields defined in the class.
+
+    Examines PEP 526 __annotations__ to determine fields.
+
+    If init is true, an __init__() method is added to the class. If repr
+    is true, a __repr__() method is added. If order is true, rich
+    comparison dunder methods are added. If unsafe_hash is true, a
+    __hash__() method is added. If frozen is true, fields may not be
+    assigned to after instance creation. If match_args is true, the
+    __match_args__ tuple is added. If kw_only is true, then by default
+    all fields are keyword-only. If slots is true, a new class with a
+    __slots__ attribute is returned.
+  Function: field(*, default=<dataclasses._MISSING_TYPE object at 0x7ff2111ed610>, default_factory=<dataclasses._MISSING_TYPE object at 0x7ff2111ed610>, init=True, repr=True, hash=None, compare=True, metadata=None, kw_only=<dataclasses._MISSING_TYPE object at 0x7ff2111ed610>)
+    Doc: Return an object to identify dataclass fields.
+
+    default is the default value of the field.  default_factory is a
+    0-argument function called to initialize a field's value.  If init
+    is true, the field will be a parameter to the class's __init__()
+    function.  If repr is true, the field will be included in the
+    object's repr().  If hash is true, the field will be included in the
+    object's hash().  If compare is true, the field will be used in
+    comparison functions.  metadata, if specified, must be a mapping
+    which is stored but not otherwise examined by dataclass.  If kw_only
+    is true, the field will become a keyword-only parameter to
+    __init__().
+
+    It is an error to specify both default and default_factory.
+  Function: make_embedding(label, dims=512)
+    Doc: Character n-gram hashing embedding with 512 dims and 4 hash functions.
+    Reduced collision rate; better cross-domain discrimination than 128-dim.
+  Function: nx_louvain(G, weight='weight', resolution=1, threshold=1e-07, max_level=None, seed=None, *, backend=None, **backend_kwargs)
+    Doc: Find the best partition of a graph using the Louvain Community Detection
+    Algorithm.
+
+    Louvain Community Detection Algorithm is a simple method to extract the community
+    structure of a network. This is a heuristic method based on modularity optimization. [1]_
+
+    The algorithm works in 2 steps. On the first step it assigns every node to be
+    in its own community and then for each node it tries to find the maximum positive
+    modularity gain by moving each node to all of its neighbor communities. If no positive
+    gain is achieved the node remains in its original community.
+
+    The modularity gain obtained by moving an isolated node $i$ into a community $C$ can
+    easily be calculated by the following formula (combining [1]_ [2]_ and some algebra):
+
+    .. math::
+        \Delta Q = \frac{k_{i,in}}{2m} - \gamma\frac{ \Sigma_{tot} \cdot k_i}{2m^2}
+
+    where $m$ is the size of the graph, $k_{i,in}$ is the sum of the weights of the links
+    from $i$ to nodes in $C$, $k_i$ is the sum of the weights of the links incident to node $i$,
+    $\Sigma_{tot}$ is the sum of the weights of the links incident to nodes in $C$ and $\gamma$
+    is the resolution parameter.
+
+    For the directed case the modularity gain can be computed using this formula according to [3]_
+
+    .. math::
+        \Delta Q = \frac{k_{i,in}}{m}
+        - \gamma\frac{k_i^{out} \cdot\Sigma_{tot}^{in} + k_i^{in} \cdot \Sigma_{tot}^{out}}{m^2}
+
+    where $k_i^{out}$, $k_i^{in}$ are the outer and inner weighted degrees of node $i$ and
+    $\Sigma_{tot}^{in}$, $\Sigma_{tot}^{out}$ are the sum of in-going and out-going links incident
+    to nodes in $C$.
+
+    The first phase continues until no individual move can improve the modularity.
+
+    The second phase consists in building a new network whose nodes are now the communities
+    found in the first phase. To do so, the weights of the links between the new nodes are given by
+    the sum of the weight of the links between nodes in the corresponding two communities. Once this
+    phase is complete it is possible to reapply the first phase creating bigger communities with
+    increased modularity.
+
+    The above two phases are executed until no modularity gain is achieved (or is less than
+    the `threshold`, or until `max_levels` is reached).
+
+    Be careful with self-loops in the input graph. These are treated as
+    previously reduced communities -- as if the process had been started
+    in the middle of the algorithm. Large self-loop edge weights thus
+    represent strong communities and in practice may be hard to add
+    other nodes to.  If your input graph edge weights for self-loops
+    do not represent already reduced communities you may want to remove
+    the self-loops before inputting that graph.
+
+    Parameters
+    ----------
+    G : NetworkX graph
+    weight : string or None, optional (default="weight")
+        The name of an edge attribute that holds the numerical value
+        used as a weight. If None then each edge has weight 1.
+    resolution : float, optional (default=1)
+        If resolution is less than 1, the algorithm favors larger communities.
+        Greater than 1 favors smaller communities
+    threshold : float, optional (default=0.0000001)
+        Modularity gain threshold for each level. If the gain of modularity
+        between 2 levels of the algorithm is less than the given threshold
+        then the algorithm stops and returns the resulting communities.
+    max_level : int or None, optional (default=None)
+        The maximum number of levels (steps of the algorithm) to compute.
+        Must be a positive integer or None. If None, then there is no max
+        level and the threshold parameter determines the stopping condition.
+    seed : integer, random_state, or None (default)
+        Indicator of random number generation state.
+        See :ref:`Randomness<randomness>`.
+
+    Returns
+    -------
+    list
+        A list of sets (partition of `G`). Each set represents one community and contains
+        all the nodes that constitute it.
+
+    Examples
+    --------
+    >>> import networkx as nx
+    >>> G = nx.petersen_graph()
+    >>> nx.community.louvain_communities(G, seed=123)
+    [{0, 4, 5, 7, 9}, {1, 2, 3, 6, 8}]
+
+    Notes
+    -----
+    The order in which the nodes are considered can affect the final output. In the algorithm
+    the ordering happens using a random shuffle.
+
+    References
+    ----------
+    .. [1] Blondel, V.D. et al. Fast unfolding of communities in
+       large networks. J. Stat. Mech 10008, 1-12(2008). https://doi.org/10.1088/1742-5468/2008/10/P10008
+    .. [2] Traag, V.A., Waltman, L. & van Eck, N.J. From Louvain to Leiden: guaranteeing
+       well-connected communities. Sci Rep 9, 5233 (2019). https://doi.org/10.1038/s41598-019-41695-z
+    .. [3] Nicolas Dugué, Anthony Perez. Directed Louvain : maximizing modularity in directed networks.
+        [Research Report] Université d’Orléans. 2015. hal-01231784. https://hal.archives-ouvertes.fr/hal-01231784
+
+    See Also
+    --------
+    louvain_partitions
+    :any:`leiden_communities`
+  Class: ThoughtNode
+    Doc: ThoughtNode(id: int, label: str, x: float, y: float, z: float, node_type: str, depth: int = 0, importance: float = 1.0, effective_importance: float = 1.0, parent_id: Optional[int] = None, children_ids: list = <factory>, connections: list = <factory>, embedding: list = <factory>, created_at: float = <factory>, last_activated: float = 0.0, activation_count: int = 0, decision_weight: float = 1.0, tags: list = <factory>, community_id: int = -1, pagerank: float = 0.0, betweenness: float = 0.0)
+    Method: __init__(self, id: int, label: str, x: float, y: float, z: float, node_type: str, depth: int = 0, importance: float = 1.0, effective_importance: float = 1.0, parent_id: Optional[int] = None, children_ids: list = <factory>, connections: list = <factory>, embedding: list = <factory>, created_at: float = <factory>, last_activated: float = 0.0, activation_count: int = 0, decision_weight: float = 1.0, tags: list = <factory>, community_id: int = -1, pagerank: float = 0.0, betweenness: float = 0.0) -> None
+    Method: distance_to(self, other)
+    Method: semantic_similarity(self, other)
+  Class: ThoughtEdge
+    Doc: ThoughtEdge(from_id: int, to_id: int, strength: float = 0.5, edge_type: str = 'connection', created_at: float = <factory>, last_activated: float = 0.0, activation_count: int = 0)
+    Method: __init__(self, from_id: int, to_id: int, strength: float = 0.5, edge_type: str = 'connection', created_at: float = <factory>, last_activated: float = 0.0, activation_count: int = 0) -> None
+  Class: GraphAnalyzer
+    Method: __init__(self, nodes, edges)
+    Method: betweenness(self)
+    Method: bridges(self)
+      Doc: Edges whose removal disconnects the graph.
+    Method: burt_constraint(self)
+    Method: closeness(self)
+    Method: clustering(self)
+    Method: communities(self, seed=42)
+    Method: eigenvector(self)
+    Method: entropy(self)
+    Method: fiedler(self)
+    Method: full_report(self)
+    Method: hits(self)
+    Method: link_prediction(self, k=10)
+      Doc: Top-K missing edges by Adamic-Adar index.
+        High score = two nodes share many mutual neighbors → likely connected.
+    Method: modularity(self, coms)
+    Method: pagerank(self)
+    Method: small_world(self)
+  Class: ActivationEngine
+    Method: hebbian_update(self, activation, edges, lr=0.04, depression=0.005)
+    Method: spread(self, source_ids, nodes, edges, decay=0.55, steps=4, threshold=0.02)
+  Class: TemporalEngine
+    Method: activate(self, node)
+    Method: decay_all(self, nodes, rate=0.015, floor=0.1)
+    Method: recency_weight(self, node)
+  Class: ThoughtGraph
+    Method: __init__(self, persist=True)
+    Method: activate_node(self, *args, **kwargs)
+    Method: add_node(self, *args, **kwargs)
+    Method: auto_heal_graph(self, max_links: int = 8, min_score: float = 0.5) -> dict
+      Doc: Automatically apply top Adamic-Adar predicted links to reduce bridge count
+        and improve small-world coefficient.
+        Returns {applied, health_before, health_after, delta}.
+    Method: batch_import(self, items: list, auto_evaluate: bool = True) -> dict
+      Doc: Add multiple nodes at once.
+        items: list of dicts with keys: label, node_type (opt), importance (opt), tags (opt)
+        Returns {added, accepted, potential, rejected, nodes}.
+    Method: batch_operation(self)
+      Doc: Context manager for bulk updates to suppress redundant saves and caching.
+    Method: compute_surprise(self, node)
+    Method: concept_path(self, from_id: int, to_id: int) -> dict
+      Doc: Shortest weighted path between two nodes (Dijkstra on 1-strength costs).
+    Method: connect(self, *args, **kwargs)
+    Method: decay_graph(self, *args, **kwargs)
+    Method: detect_patterns(self)
+    Method: evaluate_new_node(self, node)
+    Method: export_dot(self) -> str
+      Doc: Export as DOT format (Graphviz compatible).
+    Method: export_graphml(self) -> str
+      Doc: Export as GraphML (Gephi, yEd, NetworkX compatible).
+    Method: find_bridges(self)
+      Doc: Edges whose removal would disconnect the graph.
+    Method: find_duplicates(self, threshold: float = 0.88) -> list
+      Doc: Find semantically near-identical node pairs (potential duplicates).
+    Method: find_nearest(self, node, k=7, exclude_types=None)
+    Method: get_all_nodes(self)
+    Method: get_community_subgraph(self, community_id: int) -> dict
+      Doc: Extract all nodes and internal edges for a specific Louvain community.
+        Returns {nodes, edges, analytics} for the subgraph.
+    Method: get_edges(self)
+    Method: get_evolution_history(self)
+    Method: get_node(self, node_id)
+    Method: get_topology(self, *args, **kwargs)
+    Method: graph_analytics(self)
+    Method: graph_diff(self, snapshot_a: dict, snapshot_b: dict) -> dict
+      Doc: Compare two evolution snapshots (from get_evolution_history()).
+        Returns structural changes and metric deltas.
+    Method: graph_health_advice(self) -> list
+      Doc: Actionable recommendations to improve graph health.
+    Method: graph_health_score(self)
+      Doc: Calibrated health score 0-100 using density-aware normalization.
+        Fiedler scored against theoretical maximum for current density.
+        Small-world uses log scale (sigma=1.5 = full score for knowledge graphs).
+    Method: merge_nodes(self, *args, **kwargs)
+    Method: promote_potential(self, *args, **kwargs)
+    Method: recommend_exploration(self, k=5)
+      Doc: Rank potential nodes by frontier breakthrough score.
+        Score = evaluation_score * 0.5 + neighbor_pagerank_influence * 0.3 + recency * 0.2
+        Returns top-K candidates with full reasoning.
+    Method: record_snapshot(self)
+      Doc: Save current health metrics as a timestamped snapshot.
+        Builds a time-series of graph evolution.
+    Method: remove_node(self, *args, **kwargs)
+    Method: reset(self, *args, **kwargs)
+    Method: save_snapshot(self, name: str) -> dict
+      Doc: Save a named checkpoint of the current graph state.
+    Method: search_nodes(self, query: str = '', node_type: str = None, min_importance: float = 0.0, community_id: int = None, min_pagerank: float = 0.0, tags: list = None, limit: int = 20) -> list
+      Doc: Search and filter nodes by multiple criteria.
+        Results are sorted by PageRank (most influential first).
+        query: substring match on label or tags (case-insensitive).
+    Method: seed_default_graph(self, *args, **kwargs)
+    Method: suggest_connections(self, k=5)
+      Doc: Missing-link prediction via Adamic-Adar index.
+        Returns list of {from_id, to_id, score, from_label, to_label}.
+    Method: to_dict(self)
+    Method: update_node_importance(self, node_id, importance)
+
+--- API.PY DOCS ---
+FastAPI App: ThoughtGraph API
+  Endpoint/Helper: activate_node(node_id: int)
+  Endpoint/Helper: add_edge(req: api.ConnectRequest)
+  Endpoint/Helper: add_node(req: api.AddNodeRequest)
+  Endpoint/Helper: apply_suggestion(from_id: int, to_id: int, strength: float = 0.45)
+    Doc: Accept a predicted missing link.
+  Endpoint/Helper: auto_heal(max_links: int = 8, min_score: float = 0.5)
+    Doc: Automatically apply predicted links to improve graph connectivity.
+  Endpoint/Helper: batch_import(req: api.BatchImportRequest)
+    Doc: Add multiple nodes at once, optionally auto-evaluating each.
+  Endpoint/Helper: decay()
+  Endpoint/Helper: delete_node(node_id: int)
+  Endpoint/Helper: eval_to_dict(result) -> dict
+  Endpoint/Helper: evaluate_node(node_id: int)
+  Endpoint/Helper: export_dot()
+    Doc: Export graph as DOT format (Graphviz compatible).
+  Endpoint/Helper: export_graph()
+    Doc: Export full graph as JSON (nodes, edges, metadata, topology summary).
+  Endpoint/Helper: export_graphml()
+    Doc: Export graph as GraphML (Gephi, yEd compatible).
+  Endpoint/Helper: get_advice()
+    Doc: Actionable graph health recommendations.
+  Endpoint/Helper: get_analytics()
+  Endpoint/Helper: get_bridges()
+  Endpoint/Helper: get_community(community_id: int)
+    Doc: Get all nodes and internal edges for a Louvain community.
+  Endpoint/Helper: get_concept_path(from_id: int, to_id: int)
+    Doc: Shortest semantic path between two nodes.
+  Endpoint/Helper: get_duplicates(threshold: float = 0.88)
+    Doc: Find semantically near-identical node pairs.
+  Endpoint/Helper: get_evolution()
+  Endpoint/Helper: get_graph()
+  Endpoint/Helper: get_health()
+  Endpoint/Helper: get_history()
+  Endpoint/Helper: get_node(node_id: int)
+  Endpoint/Helper: get_patterns()
+  Endpoint/Helper: get_recommendations(k: int = 5)
+  Endpoint/Helper: get_topology()
+  Endpoint/Helper: graph_diff(snap_a: int, snap_b: int)
+    Doc: Compare two evolution snapshots by index.
+  Endpoint/Helper: list_communities()
+    Doc: List all communities with member counts and anchor nodes.
+  Endpoint/Helper: merge_nodes(keep_id: int, remove_id: int)
+    Doc: Merge two nodes: transfer connections from remove_id to keep_id.
+  Endpoint/Helper: named_snapshot(name: str)
+    Doc: Save a named checkpoint of the current graph state.
+  Endpoint/Helper: node_to_dict(n: thought_graph.ThoughtNode) -> dict
+  Endpoint/Helper: promote_node(node_id: int)
+  Endpoint/Helper: reset_graph()
+  Endpoint/Helper: root()
+  Endpoint/Helper: search_nodes(q: str = '', node_type: str = None, min_importance: float = 0.0, community_id: int = None, limit: int = 20)
+    Doc: Search nodes by text query and/or filters.
+  Endpoint/Helper: serve_ui()
+  Endpoint/Helper: similar_nodes(node_id: int, k: int = 5)
+  Endpoint/Helper: suggest_links(k: int = 5)
+  Endpoint/Helper: take_snapshot()
+  Endpoint/Helper: train_graph(cycles: int = 5, node_label: str = 'Core Decision Pattern')
+    Doc: Run Hebbian training cycles on the graph.
+  Endpoint/Helper: update_node(node_id: int, req: api.UpdateNodeRequest)

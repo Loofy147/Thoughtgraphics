@@ -12,7 +12,21 @@ Changes from v2.0:
   - IMPROVED: detect_patterns() includes community health metrics
 """
 
-import json, math, time, random, collections
+import json, math, time, random, collections, threading
+
+import functools
+def atomic(method):
+    @functools.wraps(method)
+    def wrapper(self, *args, **kwargs):
+        with self._lock:
+            return method(self, *args, **kwargs)
+    return wrapper
+
+def atomic(method):
+    def wrapper(self, *args, **kwargs):
+        with self._lock:
+            return method(self, *args, **kwargs)
+    return wrapper
 from dataclasses import dataclass, field, asdict
 from typing import Optional
 from pathlib import Path
@@ -158,7 +172,7 @@ class GraphAnalyzer:
     def pagerank(self):
         if not self._G: return {}
         try: return nx.pagerank(self._G, alpha=0.85, weight="weight", max_iter=300)
-        except: return nx.pagerank(self._G, alpha=0.70, weight="weight", max_iter=600)
+        except Exception: return nx.pagerank(self._G, alpha=0.70, weight="weight", max_iter=600)
 
     def betweenness(self):
         if len(self._G) < 2: return {n: 0.0 for n in self._G}
@@ -169,18 +183,18 @@ class GraphAnalyzer:
 
     def eigenvector(self):
         try: return nx.eigenvector_centrality(self._G, weight="weight", max_iter=500)
-        except: return {n: 1/max(len(self._G),1) for n in self._G.nodes}
+        except Exception: return {n: 1/max(len(self._G),1) for n in self._G.nodes}
 
     def hits(self):
         try: return nx.hits(self._G, max_iter=500)
-        except:
+        except Exception:
             d = {n: 1/max(len(self._G),1) for n in self._G.nodes}
             return dict(d), dict(d)
 
     def burt_constraint(self):
         if len(self._G) < 3: return {n: 1.0 for n in self._G.nodes}
         try: return nx.constraint(self._G, weight="weight")
-        except: return {n: 0.5 for n in self._G.nodes}
+        except Exception: return {n: 0.5 for n in self._G.nodes}
 
     def communities(self, seed=42):
         if len(self._G) < 2: return {n: 0 for n in self._G.nodes}
@@ -190,7 +204,7 @@ class GraphAnalyzer:
             for cid, part in enumerate(parts):
                 for node in part: m[node] = cid
             return m
-        except: return {n: 0 for n in self._G.nodes}
+        except Exception: return {n: 0 for n in self._G.nodes}
 
     def clustering(self):
         return nx.clustering(self._G, weight="weight")
@@ -202,7 +216,7 @@ class GraphAnalyzer:
             G = G.subgraph(max(nx.connected_components(G), key=len))
         if len(G) < 2: return 0.0
         try: return float(nx.algebraic_connectivity(G, method="tracemin_pcg"))
-        except: return 0.0
+        except Exception: return 0.0
 
     def small_world(self):
         n = len(self._G)
@@ -212,7 +226,7 @@ class GraphAnalyzer:
         lcc = self._G.subgraph(max(nx.connected_components(self._G), key=len)).copy()
         if len(lcc) < 2: return 0.0
         try: L = nx.average_shortest_path_length(lcc)
-        except: return 0.0
+        except Exception: return 0.0
         if k <= 1 or L == 0: return 0.0
         Cr = k/n; Lr = math.log(n)/math.log(k)
         if Cr == 0 or Lr == 0: return 0.0
@@ -232,13 +246,13 @@ class GraphAnalyzer:
         groups = collections.defaultdict(set)
         for nd, cid in coms.items(): groups[cid].add(nd)
         try: return float(nx.community.modularity(self._G, list(groups.values()), weight="weight"))
-        except: return 0.0
+        except Exception: return 0.0
 
     def bridges(self):
         """Edges whose removal disconnects the graph."""
         try:
             return list(nx.bridges(self._G))
-        except: return []
+        except Exception: return []
 
     def link_prediction(self, k=10):
         """
@@ -251,7 +265,7 @@ class GraphAnalyzer:
                       if not self._G.has_edge(u, v) and u != v]
             scored.sort(key=lambda x: -x[2])
             return scored[:k]
-        except: return []
+        except Exception: return []
 
     def full_report(self):
         pr    = self.pagerank()
@@ -375,7 +389,7 @@ class ThoughtGraph:
         self._topo_dirty  = True
         self._batch_mode = False
         self._cached_baseline = None
-        self._lock = contextlib.ExitStack() # For future thread-safety considerations
+        self._lock = threading.RLock() # For future thread-safety considerations
         if persist and self.STORAGE_PATH.exists():
             self._load()
 
@@ -394,6 +408,7 @@ class ThoughtGraph:
 
     # ── CRUD ──────────────────────────────────
 
+    @atomic
     def add_node(self, label, x=None, y=None, z=None, node_type="active",
                  depth=1, parent_id=None, tags=None, importance=1.0):
         if x is None: x = random.uniform(-8,8)
@@ -410,6 +425,7 @@ class ThoughtGraph:
         if self._persist: self._save()
         return node
 
+    @atomic
     def remove_node(self, node_id):
         if node_id not in self._nodes: return False
         node = self._nodes.pop(node_id)
@@ -432,6 +448,7 @@ class ThoughtGraph:
             self._nodes[node_id].effective_importance = self._nodes[node_id].importance
             if self._persist: self._save()
 
+    @atomic
     def connect(self, from_id, to_id, strength=0.5, edge_type="connection"):
         if from_id not in self._nodes or to_id not in self._nodes: return None
         existing = next((e for e in self._edges if
@@ -450,6 +467,7 @@ class ThoughtGraph:
 
     # ── TOPOLOGY ──────────────────────────────
 
+    @atomic
     def get_topology(self, force=False):
         if self._topo_dirty or force or not self._cached_topo:
             if len(self._nodes) >= 2:
@@ -523,6 +541,7 @@ class ThoughtGraph:
 
     # ── ACTIVATION ────────────────────────────
 
+    @atomic
     def activate_node(self, node_id, spread=True):
         node = self._nodes.get(node_id)
         if not node: return {}
@@ -536,6 +555,7 @@ class ThoughtGraph:
         if self._persist: self._save()
         return activation
 
+    @atomic
     def decay_graph(self):
         results = self._temporal_engine.decay_all(self._nodes)
         if self._persist: self._save()
@@ -713,6 +733,7 @@ class ThoughtGraph:
             factor_breakdown=factors,
         )
 
+    @atomic
     def promote_potential(self, node_id):
         if node_id in self._nodes and self._nodes[node_id].node_type == "potential":
             self._nodes[node_id].node_type = "active"
@@ -987,6 +1008,7 @@ class ThoughtGraph:
         dups.sort(key=lambda d: -d["similarity"])
         return dups
 
+    @atomic
     def merge_nodes(self, keep_id: int, remove_id: int) -> bool:
         """Merge two nodes: transfer connections from remove_id to keep_id."""
         if keep_id not in self._nodes or remove_id not in self._nodes: return False
@@ -1308,6 +1330,7 @@ class ThoughtGraph:
         self._evaluation_history = data.get("evaluation_history",[])
         self._evolution_history  = data.get("evolution_history",[])
 
+    @atomic
     def reset(self):
         self._nodes.clear(); self._edges.clear()
         self._next_id=0; self._evaluation_history.clear()
@@ -1317,6 +1340,7 @@ class ThoughtGraph:
 
     # ── SEED DATA (FIXED: wires all nodes) ────
 
+    @atomic
     def seed_default_graph(self):
         self.reset()
 
