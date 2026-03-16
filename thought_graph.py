@@ -46,28 +46,28 @@ def make_embedding(label, dims=512):
     return [v / norm for v in vec]
 
 def _compute_baseline_similarity(nodes: list) -> tuple:
-    """Compute (median, max) of pairwise similarities among active nodes using numpy."""
+    """Compute (median, max) of pairwise similarities among active nodes using numpy vectorized ops."""
     active = [n for n in nodes if n.node_type in ("active", "meta")]
     if len(active) < 4:
         return 0.5, 1.0
 
     embeddings = np.array([n.embedding for n in active])
-    # Compute all-to-all cosine similarity
-    # Norms: (N,)
-    norms = np.linalg.norm(embeddings, axis=1)
+    # Normalize embeddings
+    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
     norms[norms == 0] = 1.0
-    # Normalized: (N, D)
-    normed = embeddings / norms[:, np.newaxis]
-    # Similarity matrix: (N, N)
-    sim_matrix = np.dot(normed, normed.T)
-    # Get upper triangle indices (excluding diagonal)
-    triu_indices = np.triu_indices(len(active), k=1)
-    raw_sims = sim_matrix[triu_indices]
+    normed = embeddings / norms
 
-    sims = (raw_sims + 1) / 2
+    # Cosine similarity matrix
+    sim_matrix = np.dot(normed, normed.T)
+    # Scale to [0, 1]
+    sim_matrix = (sim_matrix + 1) / 2
+
+    # Get upper triangle excluding diagonal
+    triu_indices = np.triu_indices(len(active), k=1)
+    sims = sim_matrix[triu_indices]
+
     if len(sims) == 0:
         return 0.5, 1.0
-
     return float(np.median(sims)), float(np.max(sims))
 
 
@@ -471,14 +471,40 @@ class ThoughtGraph:
     def find_nearest(self, node, k=7, exclude_types=None):
         candidates = [n for n in self._nodes.values()
                       if n.id != node.id and (not exclude_types or n.node_type not in exclude_types)]
-        scored = []
-        for other in candidates:
-            spatial = node.distance_to(other)
-            semantic = node.semantic_similarity(other)
-            combined = semantic * 0.62 + (1.0/(1.0+spatial*0.18)) * 0.38
-            scored.append((other, spatial, semantic, combined))
-        scored.sort(key=lambda t: t[3], reverse=True)
-        return scored[:k]
+        if not candidates:
+            return []
+
+        # Semantic similarity (vectorized)
+        cand_embeddings = np.array([n.embedding for n in candidates])
+        node_embedding = np.array(node.embedding)
+
+        # Norms
+        cand_norms = np.linalg.norm(cand_embeddings, axis=1)
+        node_norm = np.linalg.norm(node_embedding)
+
+        # Avoid division by zero
+        cand_norms[cand_norms == 0] = 1.0
+        if node_norm == 0: node_norm = 1.0
+
+        # Cosine similarity
+        cos_sims = np.dot(cand_embeddings, node_embedding) / (cand_norms * node_norm)
+        semantic_sims = (cos_sims + 1) / 2
+
+        # Spatial distance
+        cand_coords = np.array([[n.x, n.y, n.z] for n in candidates])
+        node_coord = np.array([node.x, node.y, node.z])
+        spatial_dists = np.linalg.norm(cand_coords - node_coord, axis=1)
+
+        # Combined score
+        combined_scores = semantic_sims * 0.62 + (1.0 / (1.0 + spatial_dists * 0.18)) * 0.38
+
+        # Zip and sort
+        results = []
+        for i, cand in enumerate(candidates):
+            results.append((cand, float(spatial_dists[i]), float(semantic_sims[i]), float(combined_scores[i])))
+
+        results.sort(key=lambda t: t[3], reverse=True)
+        return results[:k]
 
     def compute_surprise(self, node):
         others = [n for n in self._nodes.values() if n.id != node.id]
