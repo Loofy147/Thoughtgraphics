@@ -9,7 +9,7 @@
       "node_type": "meta",
       "depth": 0,
       "importance": 2.0,
-      "effective_importance": 1.9999757352810816,
+      "effective_importance": 1.9999778163709694,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -532,14 +532,14 @@
         0.06574461159641394,
         0.0
       ],
-      "created_at": 1773613389.0564587,
+      "created_at": 1773692041.6177068,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 2.0,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.080447,
-      "betweenness": 0.119658
+      "pagerank": 0.079366,
+      "betweenness": 0.0
     },
     {
       "id": 1,
@@ -550,7 +550,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999878755092519,
+      "effective_importance": 0.9999889167446168,
       "parent_id": null,
       "children_ids": [
         10,
@@ -563,8 +563,7 @@
         9,
         10,
         11,
-        12,
-        2
+        12
       ],
       "embedding": [
         0.0,
@@ -1080,14 +1079,14 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.0583472,
+      "created_at": 1773692041.619761,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 1,
-      "pagerank": 0.105082,
-      "betweenness": 0.396011
+      "pagerank": 0.097058,
+      "betweenness": 0.222222
     },
     {
       "id": 2,
@@ -1098,7 +1097,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999878867008818,
+      "effective_importance": 0.9999889263815877,
       "parent_id": null,
       "children_ids": [
         13,
@@ -1113,7 +1112,7 @@
         14,
         15,
         23,
-        1
+        3
       ],
       "embedding": [
         0.01479925636788991,
@@ -1629,14 +1628,14 @@
         0.04439776910366973,
         0.0
       ],
-      "created_at": 1773613389.0610332,
+      "created_at": 1773692041.622074,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 2,
-      "pagerank": 0.123168,
-      "betweenness": 0.378917
+      "pagerank": 0.12112,
+      "betweenness": 0.413105
     },
     {
       "id": 3,
@@ -1647,7 +1646,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999879013584799,
+      "effective_importance": 0.9999889399255999,
       "parent_id": null,
       "children_ids": [
         16,
@@ -1663,7 +1662,7 @@
         17,
         18,
         21,
-        26
+        2
       ],
       "embedding": [
         0.0,
@@ -2179,14 +2178,14 @@
         0.0,
         0.03384223911680139
       ],
-      "created_at": 1773613389.064551,
+      "created_at": 1773692041.6253245,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.142364,
-      "betweenness": 0.501425
+      "pagerank": 0.141296,
+      "betweenness": 0.678063
     },
     {
       "id": 4,
@@ -2197,7 +2196,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.99998792262516,
+      "effective_importance": 0.9999889574163896,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -2720,13 +2719,13 @@
         0.03099339932577126,
         0.12397359730308503
       ],
-      "created_at": 1773613389.0696552,
+      "created_at": 1773692041.6295223,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 3,
-      "pagerank": 0.06637,
+      "pagerank": 0.069262,
       "betweenness": 0.213675
     },
     {
@@ -2738,7 +2737,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999879469346211,
+      "effective_importance": 0.9999889816801794,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -3261,14 +3260,14 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.0754895,
+      "created_at": 1773692041.6353457,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.062367,
-      "betweenness": 0.373219
+      "pagerank": 0.062543,
+      "betweenness": 0.415954
     },
     {
       "id": 6,
@@ -3279,7 +3278,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999879752514536,
+      "effective_importance": 0.9999890104410909,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -3801,13 +3800,13 @@
         0.07432841205772259,
         0.0
       ],
-      "created_at": 1773613389.0822856,
+      "created_at": 1773692041.6422484,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.042462,
+      "pagerank": 0.041341,
       "betweenness": 0.074074
     },
     {
@@ -3819,7 +3818,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999880107406264,
+      "effective_importance": 0.9999890446607353,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -4340,14 +4339,14 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.0908031,
+      "created_at": 1773692041.6504612,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 3,
-      "pagerank": 0.03763,
-      "betweenness": 0.262108
+      "pagerank": 0.048577,
+      "betweenness": 0.324786
     },
     {
       "id": 8,
@@ -4358,7 +4357,7 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.999988048149047,
+      "effective_importance": 0.9999890818734949,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -4878,13 +4877,13 @@
         0.0,
         0.03604918595671184
       ],
-      "created_at": 1773613389.0997813,
+      "created_at": 1773692041.6593924,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 3,
-      "pagerank": 0.030175,
+      "pagerank": 0.031251,
       "betweenness": 0.0
     },
     {
@@ -4896,13 +4895,14 @@
       "node_type": "active",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.999988088787009,
+      "effective_importance": 0.9999891237383478,
       "parent_id": null,
       "children_ids": [],
       "connections": [
         2,
         1,
-        25
+        25,
+        26
       ],
       "embedding": [
         0.0,
@@ -5418,14 +5418,14 @@
         0.033846066922400296,
         0.0
       ],
-      "created_at": 1773613389.1095345,
+      "created_at": 1773692041.66944,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 2,
-      "pagerank": 0.037887,
-      "betweenness": 0.074074
+      "pagerank": 0.045849,
+      "betweenness": 0.145299
     },
     {
       "id": 10,
@@ -5436,7 +5436,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.99998813695593,
+      "effective_importance": 0.9999891675214577,
       "parent_id": 1,
       "children_ids": [],
       "connections": [
@@ -5956,13 +5956,13 @@
         0.014641747477247407,
         0.07028038789078754
       ],
-      "created_at": 1773613389.1210952,
+      "created_at": 1773692041.679948,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 1,
-      "pagerank": 0.019245,
+      "pagerank": 0.019445,
       "betweenness": 0.0
     },
     {
@@ -5974,7 +5974,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999881898057495,
+      "effective_importance": 0.9999892130986501,
       "parent_id": 1,
       "children_ids": [],
       "connections": [
@@ -6494,13 +6494,13 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.1337793,
+      "created_at": 1773692041.6908867,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 1,
-      "pagerank": 0.019245,
+      "pagerank": 0.019445,
       "betweenness": 0.0
     },
     {
@@ -6512,7 +6512,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999882450665514,
+      "effective_importance": 0.999989265172681,
       "parent_id": 1,
       "children_ids": [],
       "connections": [
@@ -7032,13 +7032,13 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.147042,
+      "created_at": 1773692041.7033846,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 1,
-      "pagerank": 0.019245,
+      "pagerank": 0.019445,
       "betweenness": 0.0
     },
     {
@@ -7050,7 +7050,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999883021869995,
+      "effective_importance": 0.9999893220627186,
       "parent_id": 2,
       "children_ids": [],
       "connections": [
@@ -7570,14 +7570,14 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.160751,
+      "created_at": 1773692041.7170384,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 2,
-      "pagerank": 0.02984,
-      "betweenness": 0.074074
+      "pagerank": 0.020217,
+      "betweenness": 0.0
     },
     {
       "id": 14,
@@ -7588,7 +7588,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999883611213978,
+      "effective_importance": 0.9999893808590943,
       "parent_id": 2,
       "children_ids": [],
       "connections": [
@@ -8108,13 +8108,13 @@
         0.10071202532913671,
         0.07553401899685254
       ],
-      "created_at": 1773613389.1748955,
+      "created_at": 1773692041.7311497,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 2,
-      "pagerank": 0.020469,
+      "pagerank": 0.020217,
       "betweenness": 0.0
     },
     {
@@ -8126,7 +8126,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999884274129143,
+      "effective_importance": 0.9999894434890051,
       "parent_id": 2,
       "children_ids": [],
       "connections": [
@@ -8646,13 +8646,13 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.1908057,
+      "created_at": 1773692041.746181,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 2,
-      "pagerank": 0.020469,
+      "pagerank": 0.020217,
       "betweenness": 0.0
     },
     {
@@ -8664,7 +8664,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999884958650788,
+      "effective_importance": 0.999989506541115,
       "parent_id": 3,
       "children_ids": [],
       "connections": [
@@ -9184,13 +9184,13 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.2072344,
+      "created_at": 1773692041.7613137,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.019971,
+      "pagerank": 0.019246,
       "betweenness": 0.0
     },
     {
@@ -9202,7 +9202,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999885684577365,
+      "effective_importance": 0.9999895718671222,
       "parent_id": 3,
       "children_ids": [],
       "connections": [
@@ -9722,13 +9722,13 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.2246568,
+      "created_at": 1773692041.776992,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.019971,
+      "pagerank": 0.019246,
       "betweenness": 0.0
     },
     {
@@ -9740,7 +9740,7 @@
       "node_type": "child",
       "depth": 2,
       "importance": 1.0,
-      "effective_importance": 0.9999886445292845,
+      "effective_importance": 0.9999896414846238,
       "parent_id": 3,
       "children_ids": [],
       "connections": [
@@ -10260,25 +10260,25 @@
         0.010214739659875056,
         0.034049132199583526
       ],
-      "created_at": 1773613389.2429142,
+      "created_at": 1773692041.7937005,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 0.3,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.019971,
+      "pagerank": 0.019246,
       "betweenness": 0.0
     },
     {
       "id": 19,
       "label": "Payment System",
       "x": 9.0,
-      "y": 0.4580134194100709,
+      "y": 1.4506244196113536,
       "z": 0.0,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999887219151059,
+      "effective_importance": 0.999989716057212,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -10798,25 +10798,25 @@
         0.0,
         0.05795922237230711
       ],
-      "created_at": 1773613389.261487,
+      "created_at": 1773692041.811598,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 3,
-      "pagerank": 0.010535,
+      "pagerank": 0.01076,
       "betweenness": 0.0
     },
     {
       "id": 20,
       "label": "P2P Network",
       "x": 6.3639610306789285,
-      "y": -1.42584415332058,
+      "y": 0.9269057185178471,
       "z": 6.363961030678928,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999888055921331,
+      "effective_importance": 0.9999897993776915,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -11336,25 +11336,25 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.2815697,
+      "created_at": 1773692041.8315952,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.008587,
+      "pagerank": 0.008596,
       "betweenness": 0.0
     },
     {
       "id": 21,
       "label": "Local-first DB",
       "x": 5.51091059616309e-16,
-      "y": 1.5106825859696649,
+      "y": -1.34769706868066,
       "z": 9.0,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999888903042897,
+      "effective_importance": 0.999989878287479,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -11874,25 +11874,25 @@
         0.0,
         0.05742707737454658
       ],
-      "created_at": 1773613389.3019009,
+      "created_at": 1773692041.8505337,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.008406,
+      "pagerank": 0.008255,
       "betweenness": 0.0
     },
     {
       "id": 22,
       "label": "Agent Swarm",
       "x": -6.363961030678928,
-      "y": -0.9337791626382099,
+      "y": 1.178110399868891,
       "z": 6.3639610306789285,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999889817209088,
+      "effective_importance": 0.9999899627652838,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -12412,25 +12412,25 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.323841,
+      "created_at": 1773692041.8708086,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 3,
-      "pagerank": 0.010535,
+      "pagerank": 0.01076,
       "betweenness": 0.0
     },
     {
       "id": 23,
       "label": "Neural Architecture",
       "x": -9.0,
-      "y": 0.4907537383210374,
+      "y": 1.507558204467459,
       "z": 1.102182119232618e-15,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999890734981404,
+      "effective_importance": 0.9999900626984266,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -12950,25 +12950,25 @@
         0.04538141045245483,
         0.0
       ],
-      "created_at": 1773613389.3458679,
+      "created_at": 1773692041.8947928,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 2,
-      "pagerank": 0.00851,
+      "pagerank": 0.008457,
       "betweenness": 0.0
     },
     {
       "id": 24,
       "label": "Mesh Network",
       "x": -6.363961030678929,
-      "y": -0.8989826012644002,
+      "y": -1.33668677455058,
       "z": -6.363961030678928,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999891665936221,
+      "effective_importance": 0.9999901559658589,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -13488,25 +13488,25 @@
         0.03623438263273776,
         0.0
       ],
-      "created_at": 1773613389.368211,
+      "created_at": 1773692041.9171772,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 0,
-      "pagerank": 0.008767,
+      "pagerank": 0.008677,
       "betweenness": 0.0
     },
     {
       "id": 25,
       "label": "Quantum State",
       "x": -1.6532731788489267e-15,
-      "y": 1.4734240645116659,
+      "y": -1.811523836963767,
       "z": -9.0,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999892661034969,
+      "effective_importance": 0.9999902539310934,
       "parent_id": null,
       "children_ids": [],
       "connections": [
@@ -14026,29 +14026,29 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.3920937,
+      "created_at": 1773692041.940689,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
       "community_id": 2,
-      "pagerank": 0.008855,
+      "pagerank": 0.009175,
       "betweenness": 0.0
     },
     {
       "id": 26,
       "label": "Graph Database",
       "x": 6.363961030678926,
-      "y": 1.4095121119503964,
+      "y": -0.23483999894680574,
       "z": -6.363961030678929,
       "node_type": "potential",
       "depth": 1,
       "importance": 1.0,
-      "effective_importance": 0.9999893700906363,
+      "effective_importance": 0.9999903567729439,
       "parent_id": null,
       "children_ids": [],
       "connections": [
-        3
+        9
       ],
       "embedding": [
         0.0,
@@ -14564,13 +14564,13 @@
         0.0,
         0.0
       ],
-      "created_at": 1773613389.4170508,
+      "created_at": 1773692041.9653714,
       "last_activated": 0.0,
       "activation_count": 0,
       "decision_weight": 1.0,
       "tags": [],
-      "community_id": 0,
-      "pagerank": 0.008406,
+      "community_id": 2,
+      "pagerank": 0.009175,
       "betweenness": 0.0
     }
   ],
@@ -14580,7 +14580,7 @@
       "to_id": 1,
       "strength": 0.79,
       "edge_type": "connection",
-      "created_at": 1773613389.444173,
+      "created_at": 1773692041.9916055,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14589,7 +14589,7 @@
       "to_id": 2,
       "strength": 0.89,
       "edge_type": "connection",
-      "created_at": 1773613389.4694564,
+      "created_at": 1773692042.0262327,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14598,7 +14598,7 @@
       "to_id": 3,
       "strength": 0.99,
       "edge_type": "connection",
-      "created_at": 1773613389.4947107,
+      "created_at": 1773692042.0603144,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14607,7 +14607,7 @@
       "to_id": 5,
       "strength": 0.84,
       "edge_type": "connection",
-      "created_at": 1773613389.5206766,
+      "created_at": 1773692042.1258857,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14616,7 +14616,7 @@
       "to_id": 3,
       "strength": 0.69,
       "edge_type": "connection",
-      "created_at": 1773613389.5461612,
+      "created_at": 1773692042.1531625,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14625,7 +14625,7 @@
       "to_id": 6,
       "strength": 0.59,
       "edge_type": "connection",
-      "created_at": 1773613389.570607,
+      "created_at": 1773692042.2194257,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14634,7 +14634,7 @@
       "to_id": 5,
       "strength": 0.89,
       "edge_type": "connection",
-      "created_at": 1773613389.5953698,
+      "created_at": 1773692042.2439494,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14643,7 +14643,7 @@
       "to_id": 8,
       "strength": 0.69,
       "edge_type": "connection",
-      "created_at": 1773613389.6205645,
+      "created_at": 1773692042.2710762,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14652,7 +14652,7 @@
       "to_id": 7,
       "strength": 0.49,
       "edge_type": "connection",
-      "created_at": 1773613389.6454413,
+      "created_at": 1773692042.3054578,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14661,7 +14661,7 @@
       "to_id": 3,
       "strength": 0.79,
       "edge_type": "connection",
-      "created_at": 1773613389.6705272,
+      "created_at": 1773692042.3412185,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14670,7 +14670,7 @@
       "to_id": 4,
       "strength": 0.59,
       "edge_type": "connection",
-      "created_at": 1773613389.6966095,
+      "created_at": 1773692042.3881984,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14679,7 +14679,7 @@
       "to_id": 9,
       "strength": 0.69,
       "edge_type": "connection",
-      "created_at": 1773613389.7223625,
+      "created_at": 1773692042.44079,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14688,7 +14688,7 @@
       "to_id": 9,
       "strength": 0.49,
       "edge_type": "connection",
-      "created_at": 1773613389.7485988,
+      "created_at": 1773692042.4674673,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14697,7 +14697,7 @@
       "to_id": 1,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.774156,
+      "created_at": 1773692042.4939997,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14706,7 +14706,7 @@
       "to_id": 1,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.8002102,
+      "created_at": 1773692042.5178254,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14715,7 +14715,7 @@
       "to_id": 1,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.826123,
+      "created_at": 1773692042.5413241,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14724,7 +14724,7 @@
       "to_id": 2,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.8517034,
+      "created_at": 1773692042.5656543,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14733,7 +14733,7 @@
       "to_id": 2,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.877751,
+      "created_at": 1773692042.5898223,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14742,7 +14742,7 @@
       "to_id": 2,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.9051847,
+      "created_at": 1773692042.6149943,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14751,7 +14751,7 @@
       "to_id": 3,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.9308958,
+      "created_at": 1773692042.638855,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14760,7 +14760,7 @@
       "to_id": 3,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.956864,
+      "created_at": 1773692042.6617002,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14769,7 +14769,7 @@
       "to_id": 3,
       "strength": 0.69,
       "edge_type": "hierarchy",
-      "created_at": 1773613389.9833088,
+      "created_at": 1773692042.6849728,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14778,7 +14778,7 @@
       "to_id": 4,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.0108964,
+      "created_at": 1773692042.7103677,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14787,7 +14787,7 @@
       "to_id": 5,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.0377934,
+      "created_at": 1773692042.7339144,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14796,7 +14796,7 @@
       "to_id": 3,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.065131,
+      "created_at": 1773692042.7594447,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14805,7 +14805,7 @@
       "to_id": 4,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.097764,
+      "created_at": 1773692042.785246,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14814,7 +14814,7 @@
       "to_id": 2,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.1251788,
+      "created_at": 1773692042.8130448,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14823,7 +14823,7 @@
       "to_id": 6,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.1524417,
+      "created_at": 1773692042.8386266,
       "last_activated": 0.0,
       "activation_count": 0
     },
@@ -14832,25 +14832,25 @@
       "to_id": 9,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.1819,
+      "created_at": 1773692042.8634865,
       "last_activated": 0.0,
       "activation_count": 0
     },
     {
       "from_id": 26,
-      "to_id": 3,
+      "to_id": 9,
       "strength": 0.13999999999999999,
       "edge_type": "potential_link",
-      "created_at": 1773613390.2095618,
+      "created_at": 1773692042.8887193,
       "last_activated": 0.0,
       "activation_count": 0
     },
     {
-      "from_id": 1,
-      "to_id": 2,
+      "from_id": 2,
+      "to_id": 3,
       "strength": 0.395,
       "edge_type": "connection",
-      "created_at": 1773613391.8610444,
+      "created_at": 1773692044.176866,
       "last_activated": 0.0,
       "activation_count": 0
     }
@@ -14858,751 +14858,751 @@
   "next_id": 31,
   "evaluation_history": [
     {
-      "timestamp": 1773613390.7340224,
+      "timestamp": 1773692043.3469334,
       "node_id": 27,
       "label": "Integration Test Concept",
       "decision": "POTENTIAL",
-      "score": 0.574,
+      "score": 0.583,
       "surprise": 0.246,
       "community": 0,
       "factors": {
-        "semantic": 0.5892399621519894,
-        "community": 0.6,
-        "pr_influence": 0.22895010399090016,
+        "semantic": 0.6784369219915448,
+        "community": 0.4,
+        "pr_influence": 0.3268377901474423,
         "bridging": 1.0,
         "novelty": 0.8911764705882352,
         "surprise": 0.246,
         "dominant_community": 0,
         "n_communities_bridged": 3,
-        "composite": 0.574
+        "composite": 0.583
       }
     },
     {
-      "timestamp": 1773613390.923524,
+      "timestamp": 1773692043.465869,
       "node_id": 27,
       "label": "Integration Test Concept",
       "decision": "POTENTIAL",
-      "score": 0.535,
+      "score": 0.589,
       "surprise": 0.246,
       "community": 0,
       "factors": {
-        "semantic": 0.602406806802581,
+        "semantic": 0.6803408489851672,
         "community": 0.4,
-        "pr_influence": 0.26114800948765254,
+        "pr_influence": 0.35885769321137895,
         "bridging": 1.0,
         "novelty": 0.8911764705882352,
         "surprise": 0.246,
         "dominant_community": 0,
-        "n_communities_bridged": 4,
-        "composite": 0.535
+        "n_communities_bridged": 3,
+        "composite": 0.589
       }
     },
     {
-      "timestamp": 1773613391.2442815,
+      "timestamp": 1773692043.6255932,
       "node_id": 19,
       "label": "Payment System",
       "decision": "POTENTIAL",
-      "score": 0.504,
+      "score": 0.547,
       "surprise": 0.236,
       "community": 1,
       "factors": {
-        "semantic": 0.5317751569230199,
-        "community": 0.4,
-        "pr_influence": 0.29247544978466267,
+        "semantic": 0.5313614496941877,
+        "community": 0.6,
+        "pr_influence": 0.24930120572923195,
         "bridging": 1.0,
         "novelty": 0.8764705882352941,
         "surprise": 0.236,
         "dominant_community": 1,
-        "n_communities_bridged": 4,
-        "composite": 0.504
+        "n_communities_bridged": 3,
+        "composite": 0.547
       }
     },
     {
-      "timestamp": 1773613391.277107,
+      "timestamp": 1773692043.6551561,
       "node_id": 20,
       "label": "P2P Network",
       "decision": "POTENTIAL",
-      "score": 0.482,
+      "score": 0.43,
       "surprise": 0.123,
-      "community": 0,
+      "community": 3,
       "factors": {
-        "semantic": 0.42448566358289563,
-        "community": 0.6,
-        "pr_influence": 0.22591789731918333,
+        "semantic": 0.4221535629028237,
+        "community": 0.4,
+        "pr_influence": 0.22220590852302277,
         "bridging": 1.0,
         "novelty": 0.7102941176470589,
         "surprise": 0.123,
-        "dominant_community": 0,
-        "n_communities_bridged": 3,
-        "composite": 0.482
+        "dominant_community": 3,
+        "n_communities_bridged": 4,
+        "composite": 0.43
       }
     },
     {
-      "timestamp": 1773613391.309245,
+      "timestamp": 1773692043.686016,
       "node_id": 21,
       "label": "Local-first DB",
       "decision": "POTENTIAL",
-      "score": 0.452,
+      "score": 0.484,
       "surprise": 0.33,
       "community": 3,
       "factors": {
-        "semantic": 0.38457888390769673,
+        "semantic": 0.4471482762147096,
         "community": 0.4,
-        "pr_influence": 0.4051872211135732,
+        "pr_influence": 0.40700623574630324,
         "bridging": 1.0,
         "novelty": 0.9852941176470588,
         "surprise": 0.33,
         "dominant_community": 3,
         "n_communities_bridged": 3,
-        "composite": 0.452
+        "composite": 0.484
       }
     },
     {
-      "timestamp": 1773613391.341273,
+      "timestamp": 1773692043.7153783,
       "node_id": 22,
       "label": "Agent Swarm",
-      "decision": "POTENTIAL",
-      "score": 0.548,
-      "surprise": 0.306,
-      "community": 2,
-      "factors": {
-        "semantic": 0.49134225212261307,
-        "community": 0.6,
-        "pr_influence": 0.4687906031679883,
-        "bridging": 0.6666666666666666,
-        "novelty": 0.9794117647058823,
-        "surprise": 0.306,
-        "dominant_community": 2,
-        "n_communities_bridged": 2,
-        "composite": 0.548
-      }
-    },
-    {
-      "timestamp": 1773613391.3730779,
-      "node_id": 23,
-      "label": "Neural Architecture",
-      "decision": "POTENTIAL",
-      "score": 0.54,
-      "surprise": 0.316,
-      "community": 0,
-      "factors": {
-        "semantic": 0.5024651876103002,
-        "community": 0.6,
-        "pr_influence": 0.37222250544469887,
-        "bridging": 0.6666666666666666,
-        "novelty": 0.9941176470588236,
-        "surprise": 0.316,
-        "dominant_community": 0,
-        "n_communities_bridged": 2,
-        "composite": 0.54
-      }
-    },
-    {
-      "timestamp": 1773613391.407345,
-      "node_id": 24,
-      "label": "Mesh Network",
-      "decision": "POTENTIAL",
-      "score": 0.437,
-      "surprise": 0.123,
-      "community": 0,
-      "factors": {
-        "semantic": 0.45011819328463953,
-        "community": 0.4,
-        "pr_influence": 0.1742265005141007,
-        "bridging": 1.0,
-        "novelty": 0.7102941176470589,
-        "surprise": 0.123,
-        "dominant_community": 0,
-        "n_communities_bridged": 4,
-        "composite": 0.437
-      }
-    },
-    {
-      "timestamp": 1773613391.44108,
-      "node_id": 25,
-      "label": "Quantum State",
-      "decision": "POTENTIAL",
-      "score": 0.427,
-      "surprise": 0.321,
-      "community": 2,
-      "factors": {
-        "semantic": 0.39525184104122524,
-        "community": 0.4,
-        "pr_influence": 0.19590735206137314,
-        "bridging": 1.0,
-        "novelty": 0.9985294117647059,
-        "surprise": 0.321,
-        "dominant_community": 2,
-        "n_communities_bridged": 4,
-        "composite": 0.427
-      }
-    },
-    {
-      "timestamp": 1773613391.4739985,
-      "node_id": 26,
-      "label": "Graph Database",
-      "decision": "POTENTIAL",
-      "score": 0.571,
-      "surprise": 0.286,
-      "community": 1,
-      "factors": {
-        "semantic": 0.5196493612226923,
-        "community": 0.6,
-        "pr_influence": 0.4251403290894523,
-        "bridging": 1.0,
-        "novelty": 0.95,
-        "surprise": 0.286,
-        "dominant_community": 1,
-        "n_communities_bridged": 3,
-        "composite": 0.571
-      }
-    },
-    {
-      "timestamp": 1773613391.5064707,
-      "node_id": 27,
-      "label": "Integration Test Concept",
-      "decision": "POTENTIAL",
-      "score": 0.534,
-      "surprise": 0.246,
-      "community": 0,
-      "factors": {
-        "semantic": 0.5943124507870189,
-        "community": 0.4,
-        "pr_influence": 0.2813056349106173,
-        "bridging": 1.0,
-        "novelty": 0.8911764705882352,
-        "surprise": 0.246,
-        "dominant_community": 0,
-        "n_communities_bridged": 4,
-        "composite": 0.534
-      }
-    },
-    {
-      "timestamp": 1773613391.5440936,
-      "node_id": 19,
-      "label": "Payment System",
-      "decision": "POTENTIAL",
-      "score": 0.504,
-      "surprise": 0.236,
-      "community": 1,
-      "factors": {
-        "semantic": 0.5317751569230199,
-        "community": 0.4,
-        "pr_influence": 0.29247544978466267,
-        "bridging": 1.0,
-        "novelty": 0.8764705882352941,
-        "surprise": 0.236,
-        "dominant_community": 1,
-        "n_communities_bridged": 4,
-        "composite": 0.504
-      }
-    },
-    {
-      "timestamp": 1773613391.5786066,
-      "node_id": 20,
-      "label": "P2P Network",
-      "decision": "POTENTIAL",
-      "score": 0.482,
-      "surprise": 0.123,
-      "community": 0,
-      "factors": {
-        "semantic": 0.42448566358289563,
-        "community": 0.6,
-        "pr_influence": 0.22591789731918333,
-        "bridging": 1.0,
-        "novelty": 0.7102941176470589,
-        "surprise": 0.123,
-        "dominant_community": 0,
-        "n_communities_bridged": 3,
-        "composite": 0.482
-      }
-    },
-    {
-      "timestamp": 1773613391.6121893,
-      "node_id": 21,
-      "label": "Local-first DB",
-      "decision": "POTENTIAL",
-      "score": 0.452,
-      "surprise": 0.33,
-      "community": 3,
-      "factors": {
-        "semantic": 0.38457888390769673,
-        "community": 0.4,
-        "pr_influence": 0.4051872211135732,
-        "bridging": 1.0,
-        "novelty": 0.9852941176470588,
-        "surprise": 0.33,
-        "dominant_community": 3,
-        "n_communities_bridged": 3,
-        "composite": 0.452
-      }
-    },
-    {
-      "timestamp": 1773613391.645624,
-      "node_id": 22,
-      "label": "Agent Swarm",
-      "decision": "POTENTIAL",
-      "score": 0.548,
-      "surprise": 0.306,
-      "community": 2,
-      "factors": {
-        "semantic": 0.49134225212261307,
-        "community": 0.6,
-        "pr_influence": 0.4687906031679883,
-        "bridging": 0.6666666666666666,
-        "novelty": 0.9794117647058823,
-        "surprise": 0.306,
-        "dominant_community": 2,
-        "n_communities_bridged": 2,
-        "composite": 0.548
-      }
-    },
-    {
-      "timestamp": 1773613391.679338,
-      "node_id": 23,
-      "label": "Neural Architecture",
-      "decision": "POTENTIAL",
-      "score": 0.54,
-      "surprise": 0.316,
-      "community": 0,
-      "factors": {
-        "semantic": 0.5024651876103002,
-        "community": 0.6,
-        "pr_influence": 0.37222250544469887,
-        "bridging": 0.6666666666666666,
-        "novelty": 0.9941176470588236,
-        "surprise": 0.316,
-        "dominant_community": 0,
-        "n_communities_bridged": 2,
-        "composite": 0.54
-      }
-    },
-    {
-      "timestamp": 1773613391.7134082,
-      "node_id": 24,
-      "label": "Mesh Network",
-      "decision": "POTENTIAL",
-      "score": 0.437,
-      "surprise": 0.123,
-      "community": 0,
-      "factors": {
-        "semantic": 0.45011819328463953,
-        "community": 0.4,
-        "pr_influence": 0.1742265005141007,
-        "bridging": 1.0,
-        "novelty": 0.7102941176470589,
-        "surprise": 0.123,
-        "dominant_community": 0,
-        "n_communities_bridged": 4,
-        "composite": 0.437
-      }
-    },
-    {
-      "timestamp": 1773613391.747285,
-      "node_id": 25,
-      "label": "Quantum State",
-      "decision": "POTENTIAL",
-      "score": 0.427,
-      "surprise": 0.321,
-      "community": 2,
-      "factors": {
-        "semantic": 0.39525184104122524,
-        "community": 0.4,
-        "pr_influence": 0.19590735206137314,
-        "bridging": 1.0,
-        "novelty": 0.9985294117647059,
-        "surprise": 0.321,
-        "dominant_community": 2,
-        "n_communities_bridged": 4,
-        "composite": 0.427
-      }
-    },
-    {
-      "timestamp": 1773613391.780688,
-      "node_id": 26,
-      "label": "Graph Database",
-      "decision": "POTENTIAL",
-      "score": 0.571,
-      "surprise": 0.286,
-      "community": 1,
-      "factors": {
-        "semantic": 0.5196493612226923,
-        "community": 0.6,
-        "pr_influence": 0.4251403290894523,
-        "bridging": 1.0,
-        "novelty": 0.95,
-        "surprise": 0.286,
-        "dominant_community": 1,
-        "n_communities_bridged": 3,
-        "composite": 0.571
-      }
-    },
-    {
-      "timestamp": 1773613391.8150043,
-      "node_id": 27,
-      "label": "Integration Test Concept",
-      "decision": "POTENTIAL",
-      "score": 0.534,
-      "surprise": 0.246,
-      "community": 0,
-      "factors": {
-        "semantic": 0.5943124507870189,
-        "community": 0.4,
-        "pr_influence": 0.2813056349106173,
-        "bridging": 1.0,
-        "novelty": 0.8911764705882352,
-        "surprise": 0.246,
-        "dominant_community": 0,
-        "n_communities_bridged": 4,
-        "composite": 0.534
-      }
-    },
-    {
-      "timestamp": 1773613392.778827,
-      "node_id": 30,
-      "label": "E2E Test Node",
       "decision": "POTENTIAL",
       "score": 0.559,
-      "surprise": 0.334,
+      "surprise": 0.306,
       "community": 2,
       "factors": {
-        "semantic": 0.6363313997971578,
-        "community": 0.4,
-        "pr_influence": 0.2809820243125638,
+        "semantic": 0.48120985362580376,
+        "community": 0.6,
+        "pr_influence": 0.4618577632350619,
         "bridging": 1.0,
         "novelty": 0.9794117647058823,
-        "surprise": 0.334,
+        "surprise": 0.306,
         "dominant_community": 2,
         "n_communities_bridged": 3,
         "composite": 0.559
       }
     },
     {
-      "timestamp": 1773613392.9954839,
-      "node_id": 19,
-      "label": "Payment System",
-      "decision": "POTENTIAL",
-      "score": 0.502,
-      "surprise": 0.236,
-      "community": 1,
-      "factors": {
-        "semantic": 0.5298112311261882,
-        "community": 0.4,
-        "pr_influence": 0.28916789964348416,
-        "bridging": 1.0,
-        "novelty": 0.8764705882352941,
-        "surprise": 0.236,
-        "dominant_community": 1,
-        "n_communities_bridged": 4,
-        "composite": 0.502
-      }
-    },
-    {
-      "timestamp": 1773613393.0291936,
-      "node_id": 20,
-      "label": "P2P Network",
-      "decision": "POTENTIAL",
-      "score": 0.514,
-      "surprise": 0.123,
-      "community": 0,
-      "factors": {
-        "semantic": 0.42646651702836086,
-        "community": 0.8,
-        "pr_influence": 0.21331366334297558,
-        "bridging": 0.6666666666666666,
-        "novelty": 0.7102941176470589,
-        "surprise": 0.123,
-        "dominant_community": 0,
-        "n_communities_bridged": 2,
-        "composite": 0.514
-      }
-    },
-    {
-      "timestamp": 1773613393.0645103,
-      "node_id": 21,
-      "label": "Local-first DB",
-      "decision": "POTENTIAL",
-      "score": 0.46,
-      "surprise": 0.333,
-      "community": 0,
-      "factors": {
-        "semantic": 0.39206434519448363,
-        "community": 0.6,
-        "pr_influence": 0.09724070298102494,
-        "bridging": 1.0,
-        "novelty": 0.9808823529411764,
-        "surprise": 0.333,
-        "dominant_community": 0,
-        "n_communities_bridged": 3,
-        "composite": 0.46
-      }
-    },
-    {
-      "timestamp": 1773613393.0991948,
-      "node_id": 22,
-      "label": "Agent Swarm",
-      "decision": "POTENTIAL",
-      "score": 0.552,
-      "surprise": 0.306,
-      "community": 2,
-      "factors": {
-        "semantic": 0.491154417987266,
-        "community": 0.6,
-        "pr_influence": 0.4917136637235393,
-        "bridging": 0.6666666666666666,
-        "novelty": 0.9794117647058823,
-        "surprise": 0.306,
-        "dominant_community": 2,
-        "n_communities_bridged": 2,
-        "composite": 0.552
-      }
-    },
-    {
-      "timestamp": 1773613393.1337347,
+      "timestamp": 1773692043.7444859,
       "node_id": 23,
       "label": "Neural Architecture",
       "decision": "POTENTIAL",
-      "score": 0.528,
+      "score": 0.508,
       "surprise": 0.316,
-      "community": 2,
+      "community": 0,
       "factors": {
-        "semantic": 0.49829514272479086,
+        "semantic": 0.49604989441765734,
         "community": 0.4,
-        "pr_influence": 0.5246741924775838,
+        "pr_influence": 0.40396612046910835,
         "bridging": 1.0,
         "novelty": 0.9941176470588236,
         "surprise": 0.316,
-        "dominant_community": 2,
+        "dominant_community": 0,
         "n_communities_bridged": 3,
-        "composite": 0.528
+        "composite": 0.508
       }
     },
     {
-      "timestamp": 1773613393.1682713,
+      "timestamp": 1773692043.7739055,
       "node_id": 24,
       "label": "Mesh Network",
       "decision": "POTENTIAL",
-      "score": 0.458,
+      "score": 0.404,
       "surprise": 0.123,
       "community": 0,
       "factors": {
-        "semantic": 0.40393119256312604,
-        "community": 0.6,
-        "pr_influence": 0.1394523912951014,
+        "semantic": 0.3928288363981229,
+        "community": 0.4,
+        "pr_influence": 0.1478865488507715,
         "bridging": 1.0,
         "novelty": 0.7102941176470589,
         "surprise": 0.123,
         "dominant_community": 0,
-        "n_communities_bridged": 3,
-        "composite": 0.458
+        "n_communities_bridged": 4,
+        "composite": 0.404
       }
     },
     {
-      "timestamp": 1773613393.2037172,
+      "timestamp": 1773692043.805396,
       "node_id": 25,
       "label": "Quantum State",
       "decision": "POTENTIAL",
-      "score": 0.417,
+      "score": 0.501,
       "surprise": 0.321,
       "community": 2,
       "factors": {
-        "semantic": 0.38714135035971786,
-        "community": 0.4,
-        "pr_influence": 0.15345042034280132,
-        "bridging": 1.0,
+        "semantic": 0.377949643789573,
+        "community": 0.8,
+        "pr_influence": 0.191789474817354,
+        "bridging": 0.6666666666666666,
         "novelty": 0.9985294117647059,
         "surprise": 0.321,
         "dominant_community": 2,
-        "n_communities_bridged": 3,
-        "composite": 0.417
+        "n_communities_bridged": 2,
+        "composite": 0.501
       }
     },
     {
-      "timestamp": 1773613393.237217,
+      "timestamp": 1773692043.837315,
       "node_id": 26,
       "label": "Graph Database",
       "decision": "POTENTIAL",
-      "score": 0.571,
+      "score": 0.584,
       "surprise": 0.286,
       "community": 1,
       "factors": {
-        "semantic": 0.519805229857178,
+        "semantic": 0.5233111937592807,
         "community": 0.6,
-        "pr_influence": 0.4234536441782493,
+        "pr_influence": 0.4989267417815015,
         "bridging": 1.0,
         "novelty": 0.95,
         "surprise": 0.286,
         "dominant_community": 1,
         "n_communities_bridged": 3,
-        "composite": 0.571
+        "composite": 0.584
       }
     },
     {
-      "timestamp": 1773613393.271077,
+      "timestamp": 1773692043.866915,
+      "node_id": 27,
+      "label": "Integration Test Concept",
+      "decision": "POTENTIAL",
+      "score": 0.592,
+      "surprise": 0.246,
+      "community": 0,
+      "factors": {
+        "semantic": 0.6823044690138541,
+        "community": 0.4,
+        "pr_influence": 0.3754641725621606,
+        "bridging": 1.0,
+        "novelty": 0.8911764705882352,
+        "surprise": 0.246,
+        "dominant_community": 0,
+        "n_communities_bridged": 3,
+        "composite": 0.592
+      }
+    },
+    {
+      "timestamp": 1773692043.9040205,
+      "node_id": 19,
+      "label": "Payment System",
+      "decision": "POTENTIAL",
+      "score": 0.547,
+      "surprise": 0.236,
+      "community": 1,
+      "factors": {
+        "semantic": 0.5313614496941877,
+        "community": 0.6,
+        "pr_influence": 0.24930120572923195,
+        "bridging": 1.0,
+        "novelty": 0.8764705882352941,
+        "surprise": 0.236,
+        "dominant_community": 1,
+        "n_communities_bridged": 3,
+        "composite": 0.547
+      }
+    },
+    {
+      "timestamp": 1773692043.9349937,
+      "node_id": 20,
+      "label": "P2P Network",
+      "decision": "POTENTIAL",
+      "score": 0.43,
+      "surprise": 0.123,
+      "community": 3,
+      "factors": {
+        "semantic": 0.4221535629028237,
+        "community": 0.4,
+        "pr_influence": 0.22220590852302277,
+        "bridging": 1.0,
+        "novelty": 0.7102941176470589,
+        "surprise": 0.123,
+        "dominant_community": 3,
+        "n_communities_bridged": 4,
+        "composite": 0.43
+      }
+    },
+    {
+      "timestamp": 1773692043.9653468,
+      "node_id": 21,
+      "label": "Local-first DB",
+      "decision": "POTENTIAL",
+      "score": 0.484,
+      "surprise": 0.33,
+      "community": 3,
+      "factors": {
+        "semantic": 0.4471482762147096,
+        "community": 0.4,
+        "pr_influence": 0.40700623574630324,
+        "bridging": 1.0,
+        "novelty": 0.9852941176470588,
+        "surprise": 0.33,
+        "dominant_community": 3,
+        "n_communities_bridged": 3,
+        "composite": 0.484
+      }
+    },
+    {
+      "timestamp": 1773692043.9949212,
+      "node_id": 22,
+      "label": "Agent Swarm",
+      "decision": "POTENTIAL",
+      "score": 0.559,
+      "surprise": 0.306,
+      "community": 2,
+      "factors": {
+        "semantic": 0.48120985362580376,
+        "community": 0.6,
+        "pr_influence": 0.4618577632350619,
+        "bridging": 1.0,
+        "novelty": 0.9794117647058823,
+        "surprise": 0.306,
+        "dominant_community": 2,
+        "n_communities_bridged": 3,
+        "composite": 0.559
+      }
+    },
+    {
+      "timestamp": 1773692044.0248625,
+      "node_id": 23,
+      "label": "Neural Architecture",
+      "decision": "POTENTIAL",
+      "score": 0.508,
+      "surprise": 0.316,
+      "community": 0,
+      "factors": {
+        "semantic": 0.49604989441765734,
+        "community": 0.4,
+        "pr_influence": 0.40396612046910835,
+        "bridging": 1.0,
+        "novelty": 0.9941176470588236,
+        "surprise": 0.316,
+        "dominant_community": 0,
+        "n_communities_bridged": 3,
+        "composite": 0.508
+      }
+    },
+    {
+      "timestamp": 1773692044.05514,
+      "node_id": 24,
+      "label": "Mesh Network",
+      "decision": "POTENTIAL",
+      "score": 0.404,
+      "surprise": 0.123,
+      "community": 0,
+      "factors": {
+        "semantic": 0.3928288363981229,
+        "community": 0.4,
+        "pr_influence": 0.1478865488507715,
+        "bridging": 1.0,
+        "novelty": 0.7102941176470589,
+        "surprise": 0.123,
+        "dominant_community": 0,
+        "n_communities_bridged": 4,
+        "composite": 0.404
+      }
+    },
+    {
+      "timestamp": 1773692044.0834858,
+      "node_id": 25,
+      "label": "Quantum State",
+      "decision": "POTENTIAL",
+      "score": 0.501,
+      "surprise": 0.321,
+      "community": 2,
+      "factors": {
+        "semantic": 0.377949643789573,
+        "community": 0.8,
+        "pr_influence": 0.191789474817354,
+        "bridging": 0.6666666666666666,
+        "novelty": 0.9985294117647059,
+        "surprise": 0.321,
+        "dominant_community": 2,
+        "n_communities_bridged": 2,
+        "composite": 0.501
+      }
+    },
+    {
+      "timestamp": 1773692044.1119375,
+      "node_id": 26,
+      "label": "Graph Database",
+      "decision": "POTENTIAL",
+      "score": 0.584,
+      "surprise": 0.286,
+      "community": 1,
+      "factors": {
+        "semantic": 0.5233111937592807,
+        "community": 0.6,
+        "pr_influence": 0.4989267417815015,
+        "bridging": 1.0,
+        "novelty": 0.95,
+        "surprise": 0.286,
+        "dominant_community": 1,
+        "n_communities_bridged": 3,
+        "composite": 0.584
+      }
+    },
+    {
+      "timestamp": 1773692044.139544,
+      "node_id": 27,
+      "label": "Integration Test Concept",
+      "decision": "POTENTIAL",
+      "score": 0.592,
+      "surprise": 0.246,
+      "community": 0,
+      "factors": {
+        "semantic": 0.6823044690138541,
+        "community": 0.4,
+        "pr_influence": 0.3754641725621606,
+        "bridging": 1.0,
+        "novelty": 0.8911764705882352,
+        "surprise": 0.246,
+        "dominant_community": 0,
+        "n_communities_bridged": 3,
+        "composite": 0.592
+      }
+    },
+    {
+      "timestamp": 1773692045.0259132,
       "node_id": 30,
       "label": "E2E Test Node",
       "decision": "POTENTIAL",
-      "score": 0.563,
+      "score": 0.577,
       "surprise": 0.334,
-      "community": 2,
+      "community": 3,
       "factors": {
-        "semantic": 0.636350731477522,
+        "semantic": 0.6264973677914386,
         "community": 0.4,
-        "pr_influence": 0.3061536195020606,
+        "pr_influence": 0.4330139955948913,
         "bridging": 1.0,
         "novelty": 0.9794117647058823,
         "surprise": 0.334,
+        "dominant_community": 3,
+        "n_communities_bridged": 3,
+        "composite": 0.577
+      }
+    },
+    {
+      "timestamp": 1773692045.2295985,
+      "node_id": 19,
+      "label": "Payment System",
+      "decision": "POTENTIAL",
+      "score": 0.549,
+      "surprise": 0.236,
+      "community": 1,
+      "factors": {
+        "semantic": 0.5345382905640065,
+        "community": 0.6,
+        "pr_influence": 0.25514029407201744,
+        "bridging": 1.0,
+        "novelty": 0.8764705882352941,
+        "surprise": 0.236,
+        "dominant_community": 1,
+        "n_communities_bridged": 3,
+        "composite": 0.549
+      }
+    },
+    {
+      "timestamp": 1773692045.2629507,
+      "node_id": 20,
+      "label": "P2P Network",
+      "decision": "POTENTIAL",
+      "score": 0.481,
+      "surprise": 0.123,
+      "community": 0,
+      "factors": {
+        "semantic": 0.426872461269623,
+        "community": 0.6,
+        "pr_influence": 0.2134190400538963,
+        "bridging": 1.0,
+        "novelty": 0.7102941176470589,
+        "surprise": 0.123,
+        "dominant_community": 0,
+        "n_communities_bridged": 3,
+        "composite": 0.481
+      }
+    },
+    {
+      "timestamp": 1773692045.2953486,
+      "node_id": 21,
+      "label": "Local-first DB",
+      "decision": "POTENTIAL",
+      "score": 0.461,
+      "surprise": 0.333,
+      "community": 0,
+      "factors": {
+        "semantic": 0.40225121705530786,
+        "community": 0.4,
+        "pr_influence": 0.4041196103805458,
+        "bridging": 1.0,
+        "novelty": 0.9808823529411764,
+        "surprise": 0.333,
+        "dominant_community": 0,
+        "n_communities_bridged": 3,
+        "composite": 0.461
+      }
+    },
+    {
+      "timestamp": 1773692045.3267045,
+      "node_id": 22,
+      "label": "Agent Swarm",
+      "decision": "POTENTIAL",
+      "score": 0.561,
+      "surprise": 0.306,
+      "community": 2,
+      "factors": {
+        "semantic": 0.48274658382364477,
+        "community": 0.6,
+        "pr_influence": 0.4690844563544802,
+        "bridging": 1.0,
+        "novelty": 0.9794117647058823,
+        "surprise": 0.306,
         "dominant_community": 2,
         "n_communities_bridged": 3,
-        "composite": 0.563
+        "composite": 0.561
+      }
+    },
+    {
+      "timestamp": 1773692045.3586786,
+      "node_id": 23,
+      "label": "Neural Architecture",
+      "decision": "POTENTIAL",
+      "score": 0.524,
+      "surprise": 0.316,
+      "community": 2,
+      "factors": {
+        "semantic": 0.4923168012635144,
+        "community": 0.4,
+        "pr_influence": 0.5206634380265797,
+        "bridging": 1.0,
+        "novelty": 0.9941176470588236,
+        "surprise": 0.316,
+        "dominant_community": 2,
+        "n_communities_bridged": 3,
+        "composite": 0.524
+      }
+    },
+    {
+      "timestamp": 1773692045.3905344,
+      "node_id": 24,
+      "label": "Mesh Network",
+      "decision": "POTENTIAL",
+      "score": 0.455,
+      "surprise": 0.123,
+      "community": 0,
+      "factors": {
+        "semantic": 0.3966517158548034,
+        "community": 0.6,
+        "pr_influence": 0.1377592623908258,
+        "bridging": 1.0,
+        "novelty": 0.7102941176470589,
+        "surprise": 0.123,
+        "dominant_community": 0,
+        "n_communities_bridged": 3,
+        "composite": 0.455
+      }
+    },
+    {
+      "timestamp": 1773692045.4213154,
+      "node_id": 25,
+      "label": "Quantum State",
+      "decision": "POTENTIAL",
+      "score": 0.498,
+      "surprise": 0.321,
+      "community": 2,
+      "factors": {
+        "semantic": 0.376435041393275,
+        "community": 0.8,
+        "pr_influence": 0.1775019265836682,
+        "bridging": 0.6666666666666666,
+        "novelty": 0.9985294117647059,
+        "surprise": 0.321,
+        "dominant_community": 2,
+        "n_communities_bridged": 2,
+        "composite": 0.498
+      }
+    },
+    {
+      "timestamp": 1773692045.4512162,
+      "node_id": 26,
+      "label": "Graph Database",
+      "decision": "POTENTIAL",
+      "score": 0.583,
+      "surprise": 0.286,
+      "community": 1,
+      "factors": {
+        "semantic": 0.5239542002737735,
+        "community": 0.6,
+        "pr_influence": 0.48736729396989426,
+        "bridging": 1.0,
+        "novelty": 0.95,
+        "surprise": 0.286,
+        "dominant_community": 1,
+        "n_communities_bridged": 3,
+        "composite": 0.583
+      }
+    },
+    {
+      "timestamp": 1773692045.480583,
+      "node_id": 30,
+      "label": "E2E Test Node",
+      "decision": "POTENTIAL",
+      "score": 0.583,
+      "surprise": 0.334,
+      "community": 3,
+      "factors": {
+        "semantic": 0.6275616770847974,
+        "community": 0.4,
+        "pr_influence": 0.46522691667470184,
+        "bridging": 1.0,
+        "novelty": 0.9794117647058823,
+        "surprise": 0.334,
+        "dominant_community": 3,
+        "n_communities_bridged": 3,
+        "composite": 0.583
       }
     }
   ],
   "evolution_history": [
     {
-      "timestamp": 1773613390.268028,
+      "timestamp": 1773692042.9423919,
       "total_nodes": 27,
       "total_edges": 30,
       "active_nodes": 9,
       "health_score": 52.0,
       "health_grade": "C",
-      "modularity": 0.4426,
-      "fiedler": 0.051516,
+      "modularity": 0.4465,
+      "fiedler": 0.051,
       "n_communities": 4,
-      "small_world": 0.3527
+      "small_world": 0.3562
     },
     {
-      "timestamp": 1773613390.8693554,
+      "timestamp": 1773692043.4276505,
       "total_nodes": 28,
       "total_edges": 31,
       "active_nodes": 9,
-      "health_score": 52.4,
+      "health_score": 51.5,
       "health_grade": "C",
-      "modularity": 0.4478,
-      "fiedler": 0.048639,
-      "n_communities": 5,
-      "small_world": 0.3511
+      "modularity": 0.4539,
+      "fiedler": 0.043216,
+      "n_communities": 4,
+      "small_world": 0.3459
     },
     {
-      "timestamp": 1773613391.9208624,
+      "timestamp": 1773692044.240523,
       "total_nodes": 28,
       "total_edges": 33,
       "active_nodes": 9,
-      "health_score": 54.7,
+      "health_score": 57.2,
       "health_grade": "C",
-      "modularity": 0.4319,
-      "fiedler": 0.050794,
+      "modularity": 0.4281,
+      "fiedler": 0.069532,
       "n_communities": 5,
-      "small_world": 0.5515
+      "small_world": 0.5518
     },
     {
-      "timestamp": 1773613391.9959743,
+      "timestamp": 1773692044.3069396,
       "total_nodes": 28,
       "total_edges": 33,
       "active_nodes": 9,
-      "health_score": 54.7,
+      "health_score": 57.2,
       "health_grade": "C",
-      "modularity": 0.4319,
-      "fiedler": 0.050794,
+      "modularity": 0.4281,
+      "fiedler": 0.069532,
       "n_communities": 5,
-      "small_world": 0.5515
+      "small_world": 0.5518
     },
     {
-      "timestamp": 1773613392.105937,
+      "timestamp": 1773692044.4136374,
       "total_nodes": 28,
       "total_edges": 33,
       "active_nodes": 10,
-      "health_score": 54.7,
+      "health_score": 57.2,
       "health_grade": "C",
-      "modularity": 0.4319,
-      "fiedler": 0.050794,
+      "modularity": 0.4281,
+      "fiedler": 0.069532,
       "n_communities": 5,
-      "small_world": 0.5515
+      "small_world": 0.5518
     },
     {
-      "timestamp": 1773613392.2057724,
+      "timestamp": 1773692044.5059946,
       "total_nodes": 27,
       "total_edges": 31,
       "active_nodes": 9,
-      "health_score": 54.7,
+      "health_score": 54.2,
       "health_grade": "C",
-      "modularity": 0.4294,
-      "fiedler": 0.050833,
+      "modularity": 0.4265,
+      "fiedler": 0.050592,
       "n_communities": 4,
-      "small_world": 0.681
+      "small_world": 0.6623
     },
     {
-      "timestamp": 1773613392.2723305,
+      "timestamp": 1773692044.5643432,
       "name": "integration-test-snap",
       "total_nodes": 27,
       "total_edges": 31,
       "active_nodes": 9,
-      "health_score": 54.7,
+      "health_score": 54.2,
       "health_grade": "C",
-      "modularity": 0.4294,
-      "fiedler": 0.050833,
+      "modularity": 0.4265,
+      "fiedler": 0.050592,
       "n_communities": 4,
-      "small_world": 0.681
+      "small_world": 0.6623
     },
     {
-      "timestamp": 1773613392.3796685,
+      "timestamp": 1773692044.6558566,
       "total_nodes": 28,
       "total_edges": 31,
       "active_nodes": 10,
-      "health_score": 55.0,
+      "health_score": 54.5,
       "health_grade": "C",
-      "modularity": 0.4294,
-      "fiedler": 0.050833,
+      "modularity": 0.4265,
+      "fiedler": 0.050592,
       "n_communities": 5,
-      "small_world": 0.7467
+      "small_world": 0.7262
     },
     {
-      "timestamp": 1773613392.474225,
+      "timestamp": 1773692044.7383063,
       "total_nodes": 29,
       "total_edges": 31,
       "active_nodes": 11,
-      "health_score": 55.0,
+      "health_score": 54.5,
       "health_grade": "C",
-      "modularity": 0.4294,
-      "fiedler": 0.050833,
+      "modularity": 0.4265,
+      "fiedler": 0.050592,
       "n_communities": 6,
-      "small_world": 0.8176
+      "small_world": 0.7952
     },
     {
-      "timestamp": 1773613392.6417916,
+      "timestamp": 1773692044.8971353,
       "total_nodes": 28,
       "total_edges": 32,
       "active_nodes": 10,
-      "health_score": 54.3,
+      "health_score": 53.9,
       "health_grade": "C",
-      "modularity": 0.4313,
-      "fiedler": 0.050608,
+      "modularity": 0.4297,
+      "fiedler": 0.050388,
       "n_communities": 5,
-      "small_world": 0.5874
+      "small_world": 0.5695
     },
     {
-      "timestamp": 1773613392.8713715,
+      "timestamp": 1773692045.1143548,
       "total_nodes": 28,
       "total_edges": 32,
       "active_nodes": 9,
-      "health_score": 55.4,
+      "health_score": 54.0,
       "health_grade": "C",
-      "modularity": 0.4338,
-      "fiedler": 0.050125,
+      "modularity": 0.4342,
+      "fiedler": 0.048261,
       "n_communities": 4,
-      "small_world": 0.6804
+      "small_world": 0.6656
     },
     {
-      "timestamp": 1773613392.9463527,
+      "timestamp": 1773692045.1856003,
       "total_nodes": 28,
       "total_edges": 32,
       "active_nodes": 9,
-      "health_score": 55.4,
+      "health_score": 54.0,
       "health_grade": "C",
-      "modularity": 0.4338,
-      "fiedler": 0.050125,
+      "modularity": 0.4342,
+      "fiedler": 0.048261,
       "n_communities": 4,
-      "small_world": 0.6804
+      "small_world": 0.6656
     }
   ],
   "version": "2.1"

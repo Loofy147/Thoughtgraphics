@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+thought_graph_data.json
+signatures.json

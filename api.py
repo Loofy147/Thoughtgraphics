@@ -458,7 +458,7 @@ def reset_graph():
 
 @app.get("/ui", response_class=HTMLResponse)
 def serve_ui():
-    with open("/home/claude/thought_graph_ui.html") as f:
+    with open("thought_graph_ui.html") as f:
         return f.read()
 
 
