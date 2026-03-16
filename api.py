@@ -1,10 +1,11 @@
+import anyio
 """
 ThoughtGraph API v2.1 — March 2026
 All v2 features exposed: topology, health, activation,
 decay, recommendations, bridges, link prediction, evolution history.
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
@@ -89,8 +90,8 @@ def eval_to_dict(result) -> dict:
 # ── CORE ROUTES ───────────────────────────────
 
 @app.get("/")
-def root():
-    a = graph.graph_analytics()
+async def root():
+    a = await anyio.to_thread.run_sync(graph.graph_analytics)
     return {
         "status": "ok", "version": "2.1.0",
         "nodes": a.get("total_nodes", 0),
@@ -99,7 +100,7 @@ def root():
     }
 
 @app.get("/graph")
-def get_graph():
+async def get_graph():
     nodes = [node_to_dict(n) for n in graph.get_all_nodes()]
     edges = [{"from_id":e.from_id, "to_id":e.to_id,
                "strength":e.strength, "edge_type":e.edge_type,
@@ -108,18 +109,18 @@ def get_graph():
     return {
         "nodes":     nodes,
         "edges":     edges,
-        "analytics": graph.graph_analytics(),
+        "analytics": await anyio.to_thread.run_sync(graph.graph_analytics),
         "timestamp": time.time(),
     }
 
 @app.get("/nodes/{node_id}")
-def get_node(node_id: int):
+async def get_node(node_id: int):
     n = graph.get_node(node_id)
     if not n: raise HTTPException(404, "Node not found")
     return node_to_dict(n)
 
 @app.post("/nodes")
-def add_node(req: AddNodeRequest):
+async def add_node(req: AddNodeRequest, background_tasks: BackgroundTasks):
     node = graph.add_node(
         label=req.label, x=req.x, y=req.y, z=req.z,
         node_type=req.node_type, depth=req.depth,
@@ -127,7 +128,7 @@ def add_node(req: AddNodeRequest):
     )
     evaluation = None
     if req.auto_evaluate:
-        result = graph.evaluate_new_node(node)
+        result = await anyio.to_thread.run_sync(graph.evaluate_new_node, node)
         evaluation = eval_to_dict(result)
         if req.auto_connect:
             if result.decision == "ACCEPT":
@@ -138,10 +139,11 @@ def add_node(req: AddNodeRequest):
                 for tid in result.suggested_connections[:1]:
                     graph.connect(node.id, tid, strength=0.2, edge_type="potential_link")
     graph.record_snapshot()
+    background_tasks.add_task(graph.flush_changes)
     return {"node": node_to_dict(node), "evaluation": evaluation}
 
 @app.patch("/nodes/{node_id}")
-def update_node(node_id: int, req: UpdateNodeRequest):
+async def update_node(node_id: int, req: UpdateNodeRequest, background_tasks: BackgroundTasks):
     n = graph.get_node(node_id)
     if not n: raise HTTPException(404, "Node not found")
     if req.label is not None:     n.label = req.label
@@ -149,38 +151,43 @@ def update_node(node_id: int, req: UpdateNodeRequest):
     if req.importance is not None:
         graph.update_node_importance(node_id, req.importance)
     graph._topo_dirty = True
-    graph._save()
+    graph._dirty = True
+    background_tasks.add_task(graph.flush_changes)
     return node_to_dict(graph.get_node(node_id))
 
 @app.delete("/nodes/{node_id}")
-def delete_node(node_id: int):
+async def delete_node(node_id: int, background_tasks: BackgroundTasks):
     if not graph.remove_node(node_id): raise HTTPException(404, "Node not found")
+    background_tasks.add_task(graph.flush_changes)
     return {"deleted": node_id}
 
 @app.post("/nodes/{node_id}/evaluate")
-def evaluate_node(node_id: int):
+async def evaluate_node(node_id: int, background_tasks: BackgroundTasks):
     n = graph.get_node(node_id)
     if not n: raise HTTPException(404, "Node not found")
-    return eval_to_dict(graph.evaluate_new_node(n))
+    background_tasks.add_task(graph.flush_changes)
+    return eval_to_dict(await anyio.to_thread.run_sync(graph.evaluate_new_node, n))
 
 @app.post("/nodes/{node_id}/promote")
-def promote_node(node_id: int):
+async def promote_node(node_id: int, background_tasks: BackgroundTasks):
     if not graph.promote_potential(node_id):
         raise HTTPException(400, "Not found or already active")
     n = graph.get_node(node_id)
     graph.record_snapshot()
+    background_tasks.add_task(graph.flush_changes)
     return {"promoted": node_id, "node": node_to_dict(n)}
 
 @app.post("/nodes/{node_id}/activate")
-def activate_node(node_id: int):
+async def activate_node(node_id: int, background_tasks: BackgroundTasks):
     n = graph.get_node(node_id)
     if not n: raise HTTPException(404, "Node not found")
     activation = graph.activate_node(node_id, spread=True)
+    background_tasks.add_task(graph.flush_changes)
     return {"node_id": node_id, "activation_spread": activation,
             "nodes_reached": len(activation)}
 
 @app.get("/nodes/{node_id}/similar")
-def similar_nodes(node_id: int, k: int = 5):
+async def similar_nodes(node_id: int, k: int = 5):
     n = graph.get_node(node_id)
     if not n: raise HTTPException(404, "Node not found")
     nearest = graph.find_nearest(n, k=k)
@@ -193,17 +200,18 @@ def similar_nodes(node_id: int, k: int = 5):
     ]}
 
 @app.post("/edges")
-def add_edge(req: ConnectRequest):
+async def add_edge(req: ConnectRequest, background_tasks: BackgroundTasks):
     e = graph.connect(req.from_id, req.to_id, req.strength, req.edge_type)
     if not e: raise HTTPException(400, "Could not connect — check IDs")
+    background_tasks.add_task(graph.flush_changes)
     return {"from_id":e.from_id, "to_id":e.to_id, "strength":e.strength}
 
 
 # ── ANALYSIS ROUTES ───────────────────────────
 
 @app.get("/topology")
-def get_topology():
-    topo = graph.get_topology()
+async def get_topology():
+    topo = await anyio.to_thread.run_sync(graph.get_topology)
     # Return summary (full topo has large dicts)
     return {
         "fiedler":              topo.get("fiedler", 0),
@@ -220,9 +228,9 @@ def get_topology():
     }
 
 @app.get("/health")
-def get_health():
-    health  = graph.graph_health_score()
-    analytics = graph.graph_analytics()
+async def get_health():
+    health  = await anyio.to_thread.run_sync(graph.graph_health_score)
+    analytics = await anyio.to_thread.run_sync(graph.graph_analytics)
     return {
         **health,
         "context": {
@@ -235,66 +243,69 @@ def get_health():
     }
 
 @app.get("/analytics")
-def get_analytics():
-    return graph.graph_analytics()
+async def get_analytics():
+    return await anyio.to_thread.run_sync(graph.graph_analytics)
 
 @app.get("/patterns")
-def get_patterns():
-    patterns = graph.detect_patterns()
+async def get_patterns():
+    patterns = await anyio.to_thread.run_sync(graph.detect_patterns)
     return {"patterns": patterns, "count": len(patterns)}
 
 @app.get("/recommend")
-def get_recommendations(k: int = 5):
-    recs = graph.recommend_exploration(k=k)
+async def get_recommendations(k: int = 5):
+    recs = await anyio.to_thread.run_sync(graph.recommend_exploration, k)
     return {"recommendations": recs, "count": len(recs)}
 
 @app.get("/bridges")
-def get_bridges():
-    bridges = graph.find_bridges()
+async def get_bridges():
+    bridges = await anyio.to_thread.run_sync(graph.find_bridges)
     return {"bridges": bridges, "count": len(bridges)}
 
 @app.get("/suggest-links")
-def suggest_links(k: int = 5):
-    links = graph.suggest_connections(k=k)
+async def suggest_links(k: int = 5):
+    links = await anyio.to_thread.run_sync(graph.suggest_connections, k)
     return {"suggestions": links, "count": len(links)}
 
 @app.post("/decay")
-def decay():
+async def decay(background_tasks: BackgroundTasks):
     results = graph.decay_graph()
     graph.record_snapshot()
+    background_tasks.add_task(graph.flush_changes)
     return {"decayed": len(results), "importances": results}
 
 @app.get("/history")
-def get_history():
+async def get_history():
     return {"history": graph._evaluation_history[-50:]}
 
 @app.get("/evolution")
-def get_evolution():
+async def get_evolution():
     return {"snapshots": graph.get_evolution_history()}
 
 @app.post("/snapshot")
-def take_snapshot():
+async def take_snapshot(background_tasks: BackgroundTasks):
     snap = graph.record_snapshot()
+    background_tasks.add_task(graph.flush_changes)
     return snap
 
 @app.get("/advice")
-def get_advice():
+async def get_advice():
     """Actionable graph health recommendations."""
-    return {"advice": graph.graph_health_advice(), "health": graph.graph_health_score()}
+    return {"advice": await anyio.to_thread.run_sync(graph.graph_health_advice), "health": await anyio.to_thread.run_sync(graph.graph_health_score)}
 
 @app.post("/apply-suggested-link/{from_id}/{to_id}")
-def apply_suggestion(from_id: int, to_id: int, strength: float = 0.45):
+async def apply_suggestion(from_id: int, to_id: int, background_tasks: BackgroundTasks, strength: float = 0.45):
     """Accept a predicted missing link."""
     edge = graph.connect(from_id, to_id, strength=strength, edge_type="connection")
     if not edge:
         raise HTTPException(400, "Could not connect")
     graph.record_snapshot()
+    background_tasks.add_task(graph.flush_changes)
     return {"from_id": from_id, "to_id": to_id, "strength": edge.strength}
 
 @app.get("/export")
-def export_graph():
+async def export_graph():
     """Export full graph as JSON (nodes, edges, metadata, topology summary)."""
-    topo = graph.get_topology()
+    topo = await anyio.to_thread.run_sync(graph.get_topology)
     return {
         "version": "2.1",
         "exported_at": time.time(),
@@ -305,44 +316,46 @@ def export_graph():
              "activation_count": e.activation_count}
             for e in graph.get_edges()
         ],
-        "analytics": graph.graph_analytics(),
-        "health": graph.graph_health_score(),
+        "analytics": await anyio.to_thread.run_sync(graph.graph_analytics),
+        "health": await anyio.to_thread.run_sync(graph.graph_health_score),
         "communities": topo.get("communities", {}),
         "evaluation_history": graph._evaluation_history[-20:],
         "evolution_history": graph.get_evolution_history(),
     }
 
 @app.get("/path/{from_id}/{to_id}")
-def get_concept_path(from_id: int, to_id: int):
+async def get_concept_path(from_id: int, to_id: int):
     """Shortest semantic path between two nodes."""
-    result = graph.concept_path(from_id, to_id)
+    result = await anyio.to_thread.run_sync(graph.concept_path, from_id, to_id)
     if not result["found"]:
         raise HTTPException(404, f"No path found between {from_id} and {to_id}")
     return result
 
 @app.get("/duplicates")
-def get_duplicates(threshold: float = 0.88):
+async def get_duplicates(threshold: float = 0.88):
     """Find semantically near-identical node pairs."""
-    dups = graph.find_duplicates(threshold=threshold)
+    dups = await anyio.to_thread.run_sync(graph.find_duplicates, threshold)
     return {"duplicates": dups, "count": len(dups), "threshold": threshold}
 
 @app.post("/merge/{keep_id}/{remove_id}")
-def merge_nodes(keep_id: int, remove_id: int):
+async def merge_nodes(keep_id: int, remove_id: int, background_tasks: BackgroundTasks):
     """Merge two nodes: transfer connections from remove_id to keep_id."""
-    if not graph.merge_nodes(keep_id, remove_id):
+    if not await anyio.to_thread.run_sync(graph.merge_nodes, keep_id, remove_id):
         raise HTTPException(400, "Merge failed — check node IDs")
     graph.record_snapshot()
+    background_tasks.add_task(graph.flush_changes)
     return {"merged": True, "kept": keep_id, "removed": remove_id,
             "node": node_to_dict(graph.get_node(keep_id))}
 
 @app.post("/snapshot/{name}")
-def named_snapshot(name: str):
+async def named_snapshot(name: str, background_tasks: BackgroundTasks):
     """Save a named checkpoint of the current graph state."""
     snap = graph.save_snapshot(name)
+    background_tasks.add_task(graph.flush_changes)
     return snap
 
 @app.get("/export/graphml")
-def export_graphml():
+async def export_graphml():
     """Export graph as GraphML (Gephi, yEd compatible)."""
     from fastapi.responses import PlainTextResponse
     return PlainTextResponse(graph.export_graphml(),
@@ -350,7 +363,7 @@ def export_graphml():
                              headers={"Content-Disposition": "attachment; filename=thoughtgraph.graphml"})
 
 @app.get("/export/dot")
-def export_dot():
+async def export_dot():
     """Export graph as DOT format (Graphviz compatible)."""
     from fastapi.responses import PlainTextResponse
     return PlainTextResponse(graph.export_dot(),
@@ -370,17 +383,17 @@ class SearchRequest(BaseModel):
     limit:          int   = 20
 
 @app.get("/search")
-def search_nodes(q: str = "", node_type: str = None, min_importance: float = 0.0,
+async def search_nodes(q: str = "", node_type: str = None, min_importance: float = 0.0,
                  community_id: int = None, limit: int = 20):
     """Search nodes by text query and/or filters."""
-    nodes = graph.search_nodes(
+    nodes = await anyio.to_thread.run_sync(graph.search_nodes,
         query=q, node_type=node_type, min_importance=min_importance,
         community_id=community_id, limit=limit,
     )
     return {"results": [node_to_dict(n) for n in nodes], "count": len(nodes)}
 
 @app.get("/community/{community_id}")
-def get_community(community_id: int):
+async def get_community(community_id: int):
     """Get all nodes and internal edges for a Louvain community."""
     sub = graph.get_community_subgraph(community_id)
     if not sub["nodes"]:
@@ -388,9 +401,9 @@ def get_community(community_id: int):
     return sub
 
 @app.get("/communities")
-def list_communities():
+async def list_communities():
     """List all communities with member counts and anchor nodes."""
-    topo = graph.get_topology()
+    topo = await anyio.to_thread.run_sync(graph.get_topology)
     coms = topo.get("communities", {})
     from collections import defaultdict
     groups = defaultdict(list)
@@ -413,9 +426,10 @@ def list_communities():
 # ── Auto-Heal ─────────────────────────────────────────────────────
 
 @app.post("/heal")
-def auto_heal(max_links: int = 8, min_score: float = 0.5):
+async def auto_heal(background_tasks: BackgroundTasks, max_links: int = 8, min_score: float = 0.5):
     """Automatically apply predicted links to improve graph connectivity."""
-    result = graph.auto_heal_graph(max_links=max_links, min_score=min_score)
+    result = await anyio.to_thread.run_sync(graph.auto_heal_graph, max_links, min_score)
+    background_tasks.add_task(graph.flush_changes)
     return result
 
 # ── Batch Import ──────────────────────────────────────────────────
@@ -434,15 +448,16 @@ class BatchImportRequest(BaseModel):
     auto_evaluate: bool = True
 
 @app.post("/batch")
-def batch_import(req: BatchImportRequest):
+async def batch_import(req: BatchImportRequest, background_tasks: BackgroundTasks):
     """Add multiple nodes at once, optionally auto-evaluating each."""
-    result = graph.batch_import(req.items, auto_evaluate=req.auto_evaluate)
+    result = await anyio.to_thread.run_sync(graph.batch_import, req.items, req.auto_evaluate)
+    background_tasks.add_task(graph.flush_changes)
     return result
 
 # ── Graph Diff ────────────────────────────────────────────────────
 
 @app.get("/diff/{snap_a}/{snap_b}")
-def graph_diff(snap_a: int, snap_b: int):
+async def graph_diff(snap_a: int, snap_b: int):
     """Compare two evolution snapshots by index."""
     history = graph.get_evolution_history()
     if snap_a >= len(history) or snap_b >= len(history):
@@ -451,23 +466,37 @@ def graph_diff(snap_a: int, snap_b: int):
 
 
 @app.post("/train")
-def train_graph(cycles: int = 5, node_label: str = "Core Decision Pattern"):
+async def train_graph(background_tasks: BackgroundTasks, cycles: int = 5, node_label: str = "Core Decision Pattern"):
     """Run Hebbian training cycles on the graph."""
     from train_helper import run_training_cycle
-    result = run_training_cycle(graph, node_label=node_label, cycles=cycles)
+    result = await anyio.to_thread.run_sync(run_training_cycle, graph, node_label, cycles)
+    background_tasks.add_task(graph.flush_changes)
     return result
 
 @app.post("/reset")
-def reset_graph():
+async def reset_graph(background_tasks: BackgroundTasks):
     graph.reset()
     graph.seed_default_graph()
+    background_tasks.add_task(graph.flush_changes)
     return {"status": "reset", "nodes": len(graph.get_all_nodes())}
 
 @app.get("/ui", response_class=HTMLResponse)
-def serve_ui():
+async def serve_ui():
     with open("thought_graph_ui.html") as f:
         return f.read()
 
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000, reload=False)
+
+import logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger("thoughtgraph")
+
+@app.on_event("startup")
+async def startup_event():
+    logger.info("ThoughtGraph API starting up...")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    logger.info("ThoughtGraph API shutting down...")

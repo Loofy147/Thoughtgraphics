@@ -388,6 +388,7 @@ class ThoughtGraph:
         self._cached_topo = {}
         self._topo_dirty  = True
         self._batch_mode = False
+        self._dirty = False
         self._cached_baseline = None
         self._lock = threading.RLock() # For future thread-safety considerations
         if persist and self.STORAGE_PATH.exists():
@@ -422,7 +423,7 @@ class ThoughtGraph:
         self._topo_dirty = True
         if parent_id is not None and parent_id in self._nodes:
             self._nodes[parent_id].children_ids.append(node.id)
-        if self._persist: self._save()
+        self._dirty = True
         return node
 
     @atomic
@@ -436,7 +437,7 @@ class ThoughtGraph:
         for n in self._nodes.values():
             n.connections = [c for c in n.connections if c != node_id]
         self._topo_dirty = True
-        if self._persist: self._save()
+        self._dirty = True
         return True
 
     def get_node(self, node_id): return self._nodes.get(node_id)
@@ -446,7 +447,7 @@ class ThoughtGraph:
         if node_id in self._nodes:
             self._nodes[node_id].importance = max(0.0, min(5.0, importance))
             self._nodes[node_id].effective_importance = self._nodes[node_id].importance
-            if self._persist: self._save()
+        self._dirty = True
 
     @atomic
     def connect(self, from_id, to_id, strength=0.5, edge_type="connection"):
@@ -460,7 +461,7 @@ class ThoughtGraph:
         self._nodes[from_id].connections.append(to_id)
         self._nodes[to_id].connections.append(from_id)
         self._topo_dirty = True
-        if self._persist: self._save()
+        self._dirty = True
         return edge
 
     def get_edges(self): return list(self._edges)
@@ -552,13 +553,13 @@ class ThoughtGraph:
         for nid, level in activation.items():
             if nid in self._nodes and level > 0.3:
                 self._temporal_engine.activate(self._nodes[nid])
-        if self._persist: self._save()
+        self._dirty = True
         return activation
 
     @atomic
     def decay_graph(self):
         results = self._temporal_engine.decay_all(self._nodes)
-        if self._persist: self._save()
+        self._dirty = True
         return results
 
     # ── RECOMMENDATION ENGINE ─────────────────
@@ -629,7 +630,7 @@ class ThoughtGraph:
         self._evolution_history.append(snapshot)
         if len(self._evolution_history) > 500:
             self._evolution_history = self._evolution_history[-500:]
-        if self._persist: self._save()
+        self._dirty = True
         return snapshot
 
     def get_evolution_history(self):
@@ -723,7 +724,7 @@ class ThoughtGraph:
             "decision":decision, "score":round(composite,3),
             "surprise":surprise, "community":dom_com, "factors":factors,
         })
-        if self._persist: self._save()
+        self._dirty = True
 
         return EvaluationResult(
             node_id=node.id, decision=decision,
@@ -738,8 +739,8 @@ class ThoughtGraph:
         if node_id in self._nodes and self._nodes[node_id].node_type == "potential":
             self._nodes[node_id].node_type = "active"
             self._topo_dirty = True
-            if self._persist: self._save()
-            return True
+        self._dirty = True
+        return True
         return False
 
     # ── PATTERN DETECTION ─────────────────────
@@ -1046,7 +1047,7 @@ class ThoughtGraph:
         self._evolution_history.append(record)
         if len(self._evolution_history) > 500:
             self._evolution_history = self._evolution_history[-500:]
-        if self._persist: self._save()
+        self._dirty = True
         return record
 
     # ── Export Formats ────────────────────────
@@ -1311,6 +1312,12 @@ class ThoughtGraph:
                 "evolution_history":self._evolution_history,
                 "version":"2.1"}
 
+    def flush_changes(self):
+        with self._lock:
+            if self._dirty and self._persist:
+                self._save()
+                self._dirty = False
+
     def _save(self):
         if self._batch_mode: return
         with open(self.STORAGE_PATH,"w") as f: json.dump(self.to_dict(),f,indent=2)
@@ -1336,7 +1343,7 @@ class ThoughtGraph:
         self._next_id=0; self._evaluation_history.clear()
         self._evolution_history.clear()
         self._cached_topo={}; self._topo_dirty=True
-        if self._persist: self._save()
+        self._dirty = True
 
     # ── SEED DATA (FIXED: wires all nodes) ────
 
